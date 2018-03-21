@@ -11,5 +11,9 @@ https://www.lucidchart.com/documents/edit/9422030a-6e01-4269-8a26-2f84271c2111/0
 
 Authors:
 Musabbir Ahmed Baki
+<<<<<<< HEAD
 Yash Pandya
 Thomas "Cool Guy ⌐□-□ " Chapman
+=======
+Yash Pandya (100519180)
+
