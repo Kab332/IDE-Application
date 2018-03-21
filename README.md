@@ -11,5 +11,5 @@ https://www.lucidchart.com/documents/edit/9422030a-6e01-4269-8a26-2f84271c2111/0
 
 Authors:
 Musabbir Ahmed Baki
-Yash Pandya
+Yash Pandya (100519180)
 Kabilan Manogaran
