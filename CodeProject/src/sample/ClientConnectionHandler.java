@@ -4,13 +4,23 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
-public class ClientConnectionHandler extends Thread{
+public class ClientConnectionHandler extends Thread {
     Socket clientSocket;
     DataInputStream in;
     DataOutputStream out;
 
-    public ClientConnectionHandler(Socket socket) {
+    int clientNumber;
+
+    boolean isOpen;
+
+    public ClientConnectionHandler(Socket socket, int number) {
         clientSocket = socket;
+        try {
+            clientSocket.setSoTimeout(0);
+        } catch (Exception e) {}
+
+        clientNumber = number;
+        isOpen = true;
 
         try {
             in = new DataInputStream(socket.getInputStream());
@@ -22,11 +32,17 @@ public class ClientConnectionHandler extends Thread{
 
     public void run() {
         String message = "";
-
-        while ((message = readMessage()) != null) {
-            System.out.println("Received (server): " + message);
-            sendMessage(message);
+        while (isOpen) {
+            message = readMessage();
+            if (message.equals("CLOSED")) {
+                System.out.println("Client #" + clientNumber + " has closed");
+                isOpen = false;
+            }
         }
+
+        try {
+            clientSocket.close();
+        } catch (Exception e) {}
     }
 
     public void sendMessage(String message) {
