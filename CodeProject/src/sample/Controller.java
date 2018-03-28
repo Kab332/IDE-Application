@@ -2,23 +2,36 @@ package sample;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable{
     @FXML private TreeView<ProjectFile> projectTreeView;
     @FXML TabPane tabs;
+
+    public TabPane getTabs() {
+        return tabs;
+    }
+
+    public void setTabs(TabPane tabs) {
+        this.tabs = tabs;
+    }
 
     @FXML public void openNewTab(){
         addTab();
@@ -80,6 +93,36 @@ public class Controller implements Initializable{
 //
 //
 //                    }
+                    String foundFilePath = selectedItem.getValue().getFile().getAbsolutePath();//found file path is the selected folder path in tree view
+                    System.out.println(foundFilePath);
+
+                    projectTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getClickCount() == 2) {
+                                boolean fileAlreadyOpen = false;
+                                // Get TreeViewItem
+                                for(Tab tab: tabs.getTabs()){
+                                    //check if any of the tabs are that are being clicked in tree view already open
+                                    //if they are open then switch to that tab
+                                    if(selectedItem.getValue().getFile().getName().equals(tab.getText())){
+                                        fileAlreadyOpen = true;
+                                        tabs.getSelectionModel().select(tab);
+                                    }
+                                }
+
+                                //if tab is not open, open and display content
+                                if(!fileAlreadyOpen){
+                                    fileAlreadyOpen = true;
+                                    String tabName = selectedItem.getValue().getFile().getName();
+                                    TextArea textArea = addTab(tabName);
+                                    //tab added
+                                    String content = getData(foundFilePath, "");
+                                    textArea.setText(content);
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -123,21 +166,27 @@ public class Controller implements Initializable{
     @FXML public void save(){
         ////run save UI
         //runSaveUI();
-//        try {
-//            Parent layout = FXMLLoader.load(getClass().getResource("saveUI.fxml"));
-//            Stage saveUISate = new Stage();
-//            saveUISate.setTitle("Save File");
-//            saveUISate.setScene(new Scene(layout));
-//            saveUISate.show();
-//        } catch (IOException e) {
-//            System.out.println("Couldn't open saveUI.fxml");
-//            e.printStackTrace();
-//        }
+        try {
+            Parent layout = FXMLLoader.load(getClass().getResource("saveUI.fxml"));
+            Stage saveUISate = new Stage();
+            saveUISate.setTitle("Save File");
+            saveUISate.setScene(new Scene(layout));
+            saveUISate.show();
+        } catch (IOException e) {
+            System.out.println("Couldn't open saveUI.fxml");
+            e.printStackTrace();
+        }
+
+        SaveUIController saveUI = new SaveUIController();
+        saveUI.workspacePath = currentFilePath;
+        //////////////////////////////////////////
+
 
 
         ////get file name, add file name to currentFilePath
-        //String fileName = saveUITextField.getText();
-        //this.currentFilePath += fileName
+//        String fileName = saveUIController.saveUITextField.getText();
+//        this.currentFilePath += fileName;
+//        System.out.println(fileName);
         ////get selected name, and set it to written name then write to file
         //Tab currentTab = getSelectedTab();
         //currentTab.setName(fileName);
@@ -152,6 +201,32 @@ public class Controller implements Initializable{
         FileWriter fileOut = new FileWriter(filePath);
         fileOut.append(content);
         fileOut.close();
+    }
+
+
+    //This method reads a file using path name and delimitor
+    public String getData(String path, String delimiter) {
+
+        String content = "";
+        List<String> srcList = new ArrayList<>();
+        // Special Case
+        if (path == null || path.length() == 0) {
+            return "";
+        }
+        if(delimiter == null || delimiter.length() == 0) {
+            delimiter = ",";
+        }
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            //Read the next line until end of file
+            for (String line; (line = br.readLine()) != null;) {
+                content+= line +  "\n";
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return content;
     }
 
 //    @FXML public void saveAs(){
@@ -192,6 +267,28 @@ public class Controller implements Initializable{
         textAreaAnchor.setLeftAnchor(textArea, 0.0);
         textAreaAnchor.setRightAnchor(textArea, 0.0);
         tab.setContent(textAreaAnchor);
+    }
+
+    private TextArea addTab(String tabName){
+        //create new tab on menu button press of new tab or Ctrl+N
+        Tab tab = new Tab(tabName);
+        tabs.getTabs().add(tab);
+        tabs.getSelectionModel().select(tab);
+        tab.getStyleClass().add("jfx-tab-pane");
+
+        //Instantiate New Text area
+        TextArea textArea = new TextArea();
+        textArea.getStyleClass().add("code");
+
+        //Intantiate anchor
+        AnchorPane textAreaAnchor = new AnchorPane(textArea);
+        textAreaAnchor.setTopAnchor(textArea, 0.0);
+        textAreaAnchor.setBottomAnchor(textArea, 0.0);
+        textAreaAnchor.setLeftAnchor(textArea, 0.0);
+        textAreaAnchor.setRightAnchor(textArea, 0.0);
+        tab.setContent(textAreaAnchor);
+
+        return textArea;
     }
 
 
