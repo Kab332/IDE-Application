@@ -23,12 +23,14 @@ public class Client {
         }
     }
 
-    public void sendResponse(String message) {
-        byte [] data = message.getBytes();
+    public void sendMessage(String message) {
+        sendMessageAsByte(message.getBytes());
+    }
 
+    public void sendMessageAsByte(byte [] message) {
         try {
-            out.writeInt(data.length);
-            out.write(data);
+            out.writeInt(message.length);
+            out.write(message);
             out.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,6 +38,10 @@ public class Client {
     }
 
     public String readMessage() {
+        return new String(readMessageAsByte());
+    }
+
+    public byte [] readMessageAsByte() {
         byte [] data = new byte[256];
         int length;
 
@@ -49,6 +55,7 @@ public class Client {
             e.printStackTrace();
         }
 
-        return new String(data);
+        return data;
     }
+
 }

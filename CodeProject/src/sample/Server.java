@@ -37,7 +37,7 @@ public class Server extends Thread {
                 while ((message = readMessage()) != null) {
                     System.out.println("Received (server): " + message);
                     System.out.println("");
-                    sendResponse(message);
+                    sendMessage(message);
                 }
             }
         } catch (Exception e) {
@@ -45,12 +45,14 @@ public class Server extends Thread {
         }
     }
 
-    public void sendResponse(String message) {
-        byte [] data = message.getBytes();
+    public void sendMessage(String message) {
+        sendMessageAsByte(message.getBytes());
+    }
 
+    public void sendMessageAsByte(byte [] message) {
         try {
-            out.writeInt(data.length);
-            out.write(data);
+            out.writeInt(message.length);
+            out.write(message);
             out.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,6 +60,10 @@ public class Server extends Thread {
     }
 
     public String readMessage() {
+        return new String(readMessageAsByte());
+    }
+
+    public byte [] readMessageAsByte() {
         byte [] data = new byte[256];
         int length;
 
@@ -71,6 +77,6 @@ public class Server extends Thread {
             e.printStackTrace();
         }
 
-        return new String(data);
+        return data;
     }
 }
