@@ -147,7 +147,21 @@ public class Document {
         return creations;
     }
 
-
+    public String serializeChanges(Map<Integer, Integer> movements, List<Integer> deletes, Map<Integer,String> creations){
+        String ret = "$M$";
+        for(Map.Entry<Integer, Integer> entry : movements.entrySet()){
+            ret += entry.getKey() + ":" + entry.getValue()+";";
+        }
+        ret += "$D$";
+        for(int i: deletes){
+            ret += i+";";
+        }
+        ret += "$C$";
+        for(Map.Entry<Integer, String> entry : creations.entrySet()){
+            ret += entry.getKey()+":"+entry.getValue().getBytes().toString()+";";
+        }
+        return ret;
+    }
 
     public void changed(String inBundle) {
         Map<Integer, String>  creates;
@@ -163,13 +177,20 @@ public class Document {
         creates = getCreations(newBundle,oldBundle);
         deletes = help.deletes;
 
-        System.out.println("Movements: "+movements);
-        System.out.println("Creations: "+creates);
-        System.out.println("Deletions: "+deletes);
-        System.out.println(oldBundle);
-        System.out.println(newBundle);
+//        System.out.println("Movements: "+movements);
+//        System.out.println("Creations: "+creates);
+//        System.out.println("Deletions: "+deletes);
+//        System.out.println(oldBundle);
+//        System.out.println(newBundle);
 
+        /** order of serialization
+         * Movement
+         * Deletion
+         * Creation
+         */
+        String serialized = serializeChanges(movements,deletes,creates);
 
+        //Server.send(serialized);
 
 
 
@@ -177,6 +198,9 @@ public class Document {
 
     }
 
+    public void change(String serialized){
+
+    }
 
     public String toString(){
         String ret = "";
