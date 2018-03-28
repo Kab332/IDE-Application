@@ -3,10 +3,14 @@ package sample;
 import java.io.*;
 import java.net.Socket;
 
-public class Client {
+public class Client extends Thread{
     Socket socket;
     DataOutputStream out;
     DataInputStream in;
+
+    boolean isOpen;
+
+    String currentMessage;
 
     public Client() {
         System.out.println("Please pass the IP address and Port as arguments");
@@ -18,9 +22,28 @@ public class Client {
             socket = new Socket(address, port);
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
+            isOpen = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void run() {
+        while (isOpen) {
+            if (isOpen) {
+                currentMessage = readMessage();
+            }
+            System.out.println(currentMessage);
+        }
+
+        try {
+            socket.close();
+        } catch (Exception e) {}
+    }
+
+    public void closeClient() throws IOException {
+        isOpen = false;
+        sendMessage("CLOSED");
     }
 
     public void sendMessage(String message) {
@@ -51,9 +74,7 @@ public class Client {
                 data = new byte[length];
                 in.readFully(data, 0, data.length);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {}
 
         return data;
     }
