@@ -235,6 +235,9 @@ public class Controller implements Initializable{
 
         //Instantiate New Text area
         TextArea textArea = new TextArea();
+
+        textAreaAddListener(textArea, tab);
+
         textArea.getStyleClass().add("code");
 
         //Intantiate anchor
@@ -255,6 +258,9 @@ public class Controller implements Initializable{
 
         //Instantiate New Text area
         TextArea textArea = new TextArea();
+
+        textAreaAddListener(textArea, tab);
+
         textArea.getStyleClass().add("code");
 
         //Intantiate anchor
@@ -266,6 +272,15 @@ public class Controller implements Initializable{
         tab.setContent(textAreaAnchor);
 
         return textArea;
+    }
+
+    private void textAreaAddListener(TextArea ta, Tab tab){
+        ta.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println(tab.getText() + " CHANGEEDDD");
+            }
+        });
     }
 
 
