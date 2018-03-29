@@ -22,9 +22,12 @@ public class Main extends Application {
     public static int PORT;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = (Parent) loader.load();
+        Controller controller = (Controller) loader.getController();
         controller = (Controller) loader.getController();
         Scene scene = new Scene(root, 759, 600);
         teacherScene = scene;
@@ -63,6 +66,55 @@ public class Main extends Application {
         //Connect code client here
         STUDENT = new Client(IP, PORT);
         STUDENT.start();
+    }
+
+    private void ThomasMain() {
+
+        String oldCode =
+                        "A\n" +
+                        "B\n" +
+                        "\n" +
+                        "C\n";
+        String newCode =
+                        "A\n" +
+                        "\n" +
+                        "B\n" +
+                        "C;\n";
+
+
+        Document rightDoc = new Document(oldCode);
+        for(int i = 0; i < rightDoc.numOfLines; i++){
+            System.out.print("[");
+            System.out.print(rightDoc.myLines.get(i));
+            System.out.print("]\n");
+        }
+        Document leftDoc = new Document(newCode);
+        System.out.println("\n");
+        for(int i = 0; i < leftDoc.numOfLines; i++){
+            System.out.print("[");
+            System.out.print(leftDoc.myLines.get(i));
+            System.out.print("]\n");
+        }
+
+        String changes = rightDoc.changed(leftDoc.toString());
+        System.out.println("\n");
+        System.out.println(changes);
+
+        rightDoc.change(changes);
+
+        System.out.println("\n"+rightDoc.myLines.size()+" : "+rightDoc.numOfLines+"\n");
+        for(int i = 0; i < rightDoc.myLines.size(); i++){
+            System.out.print("[");
+            System.out.print(rightDoc.myLines.get(i));
+            System.out.print("]\n");
+        }
+
+
+
+
+        System.exit(0);
+
+
     }
 
 }

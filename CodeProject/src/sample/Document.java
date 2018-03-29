@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.scene.control.Tab;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,14 +13,30 @@ public class Document {
 
     public List<Line> myLines;
     public int numOfLines = 0;
-    public String tabName;
 
-    public Document(String s, String tabName){
+    public Tab tab;
+
+    public Document(Tab tab){
+        myLines = new ArrayList<>();
+
+        this.tab = tab;
+    }
+
+    public Document(String s, Tab tab){
+        myLines = new ArrayList<>();
+
+        for(String i : s.split("\n")){
+            this.addLine(i);
+        }
+
+        this.tab = tab;
 
     }
 
     public Document(String s){
         myLines = new ArrayList<>();
+
+
 
         for(String i : s.split("\n")){
             this.addLine(i);
@@ -106,7 +124,7 @@ public class Document {
 
     public void moveLines(int a, int b){
         String temp = myLines.get(a).line;
-        myLines.remove(a);
+        this.removeLine(a);
         this.addLine(b,temp);
     }
 
@@ -202,7 +220,7 @@ public class Document {
          * Creation
          */
         String serialized = serializeChanges(movements,deletes,creates);
-
+        System.out.println(serialized);
         return serialized;
 
 

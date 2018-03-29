@@ -3,6 +3,7 @@ package sample;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,14 +19,15 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable{
     @FXML private TreeView<ProjectFile> projectTreeView;
     @FXML TabPane tabs;
     private SaveUIController saveUI = new SaveUIController();
+
+//    Map<Tab, Document> tabDocMap = new TreeMap<>();
+    List<Document> docList = new ArrayList<>();
 
     @FXML MenuItem connectServerButton;
     @FXML MenuItem connectClientButton;
@@ -247,6 +249,21 @@ public class Controller implements Initializable{
         textAreaAnchor.setLeftAnchor(textArea, 0.0);
         textAreaAnchor.setRightAnchor(textArea, 0.0);
         tab.setContent(textAreaAnchor);
+
+        addDoc(tab, textArea);
+
+    }
+
+//    public String getTabText(Tab tab){
+//        //AnchorPane ap = (AnchorPane) tab.getContent();
+//        //TextArea ta = (TextArea) ap.getChildren().get(0);
+//        //return ta.getText();
+//    }
+
+    private void addDoc(Tab tab, TextArea textArea){
+
+//        tabDocMap.put(tab, new Document(textArea.getText(), tab)  ) ;
+        docList.add(new Document(textArea.getText(), tab));
     }
 
     private TextArea addTab(String tabName){
@@ -270,8 +287,17 @@ public class Controller implements Initializable{
         textAreaAnchor.setLeftAnchor(textArea, 0.0);
         textAreaAnchor.setRightAnchor(textArea, 0.0);
         tab.setContent(textAreaAnchor);
-
+        addDoc(tab, textArea);
         return textArea;
+    }
+
+    private Document getDoc(Tab tab){
+        for(Document i : docList){
+            if(i.tab.equals(tab)){
+                return i;
+            }
+        }
+        return null;
     }
 
     private void textAreaAddListener(TextArea ta, Tab tab){
@@ -279,8 +305,21 @@ public class Controller implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 System.out.println(tab.getText() + " CHANGEEDDD");
+//                tabDocMap.get(tab).changed(ta.getText());
+                System.out.print("[ "+tabs.getTabs().indexOf(tab)+" : "+docList.indexOf(getDoc(tab))+" ]\n" );
+                getDoc(tab).changed(ta.getText());
             }
         });
+
+        tab.setOnCloseRequest(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                //close event
+                docList.remove(getDoc(tab));
+            }
+        });
+
+
     }
 
 
