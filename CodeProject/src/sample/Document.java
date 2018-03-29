@@ -9,50 +9,29 @@ import java.util.TreeMap;
 
 public class Document {
 
-    public String sinceLast;
-    /**
-     * sinceLast:
-     *      r:5 removed 5
-     *      a:9 added 9
-     *      e:3 edit on line 3
-     */
-
-
     public List<Line> myLines;
     public int numOfLines = 0;
+    public String tabName;
 
-    public Document(){
-        myLines = new ArrayList<>();
+    public Document(String s, String tabName){
+
     }
 
     public Document(String s){
         myLines = new ArrayList<>();
 
-        for(String i : s.split(System.getProperty("line.separator"))){
+        for(String i : s.split("\n")){
             this.addLine(i);
         }
     }
 
-    /**
-     * removes a line at a certain index
-     *
-     * @param index     index to remove
-     */
     public void removeLine(int index){
         if(numOfLines >= index) {
             myLines.remove(index);
             numOfLines -= 1;
-            sinceLast+=";r:"+index;
         }
     }
 
-
-    /**
-     * Adds a line at a specific index
-     *
-     * @param index         index where line will be added
-     * @param toBeAdded     string to be added
-     */
     public void addLine(int index, String toBeAdded){
 
         if(numOfLines < index){
@@ -61,13 +40,12 @@ public class Document {
             myLines.add(index, new Line(toBeAdded));
         }
         numOfLines+=1;
-        sinceLast+=";a:"+index;
+
     }
 
     public void addLine(String toBeAdded){
         myLines.add(new Line(toBeAdded));
         numOfLines+=1;
-        sinceLast+=";a:"+ (numOfLines-2);
     }
 
     public void growLines(int target){
@@ -126,6 +104,12 @@ public class Document {
 
     }
 
+    public void moveLines(int a, int b){
+        String temp = myLines.get(a).line;
+        myLines.remove(a);
+        this.addLine(b,temp);
+    }
+
     public Map<Integer, String> getCreations(List<String> newBundle, List<String> oldBundle){
         Map<Integer,String> creations = new TreeMap<>();
 
@@ -136,7 +120,7 @@ public class Document {
                 in +=1;
                 continue;
             }
-            System.out.println("["+i);
+
             int index = oldBundle.indexOf(i);
             if(index == -1){
                 creations.put(in,i);
@@ -148,25 +132,60 @@ public class Document {
     }
 
     public String serializeChanges(Map<Integer, Integer> movements, List<Integer> deletes, Map<Integer,String> creations){
-        String ret = "$M$";
+        String ret = "|";
         for(Map.Entry<Integer, Integer> entry : movements.entrySet()){
             ret += entry.getKey() + ":" + entry.getValue()+";";
         }
-        ret += "$D$";
+        ret += "$|";
         for(int i: deletes){
             ret += i+";";
         }
-        ret += "$C$";
+        ret += "$|";
+        byte[] bytes;
         for(Map.Entry<Integer, String> entry : creations.entrySet()){
-            ret += entry.getKey()+":"+entry.getValue().getBytes().toString()+";";
+            ret += entry.getKey()+":";
+            bytes = entry.getValue().getBytes();
+            for(int i = 0; i < bytes.length; i++){
+
+                ret += bytes[i] + "=";
+            }
+            ret+=";";
         }
+
         return ret;
     }
 
-    public void changed(String inBundle) {
+    public void change(String toApply){
+        deserializeHelper deserialized = deserialize(toApply);
+
+        Map<Integer,Integer> m = deserialized.moved;
+
+        for (Map.Entry<Integer, Integer> entry : m.entrySet()) {
+            int k = entry.getKey();
+            int v = entry.getValue();
+            this.moveLines(k,v);
+        }
+
+        for(int i: deserialized.deleted){
+            this.removeLine(i);
+        }
+
+        for(Map.Entry<Integer,String> entry : deserialized.created.entrySet()){
+            addLine(entry.getKey(), entry.getValue());
+        }
+
+    }
+
+    public void p(String s){
+        System.out.println(s);
+    }
+
+    public String changed(String inBundle) {
+
+
         Map<Integer, String>  creates;
         Map<Integer, Integer> movements;
-        List<Integer> deletes = new ArrayList<>();
+        List<Integer> deletes;
         getMovementsHelper help;
 
         List<String> newBundle = new ArrayList<>(Arrays.asList(inBundle.split("\n")));
@@ -177,12 +196,6 @@ public class Document {
         creates = getCreations(newBundle,oldBundle);
         deletes = help.deletes;
 
-//        System.out.println("Movements: "+movements);
-//        System.out.println("Creations: "+creates);
-//        System.out.println("Deletions: "+deletes);
-//        System.out.println(oldBundle);
-//        System.out.println(newBundle);
-
         /** order of serialization
          * Movement
          * Deletion
@@ -190,7 +203,11 @@ public class Document {
          */
         String serialized = serializeChanges(movements,deletes,creates);
 
-        //Server.send(serialized);
+        return serialized;
+
+
+
+
 
 
 
@@ -198,15 +215,74 @@ public class Document {
 
     }
 
-    public void change(String serialized){
+    class deserializeHelper{
+        public Map<Integer,Integer> moved;
+        public List<Integer> deleted;
+        public Map<Integer, String> created;
+        deserializeHelper(Map<Integer,Integer> moved ,List<Integer> deleted, Map<Integer, String> created){
+            this.moved = moved;
+            this.deleted = deleted;
+            this.created = created;
+        }
 
+        public String toString(){
+            return ""+this.moved+":"+this.deleted+":"+this.created;
+        }
+
+
+
+
+    }
+
+    public deserializeHelper deserialize(String serialized){
+        String[] parts = serialized.split("\\$");
+        String movedS = parts[0];
+        String deletedS = parts[1];
+        String createdS = parts[2];
+
+        Map<Integer,Integer> moved = new TreeMap<>();
+        List<Integer> deleted = new ArrayList<>();
+        Map<Integer, String> created = new TreeMap<>();
+        String[] helper;
+        String helping;
+        if(movedS.length() > 1){
+            for(String i : movedS.substring(1,movedS.length()).split(";")){
+                helper = i.split(":");
+                moved.put(Integer.valueOf(helper[0]),Integer.valueOf(helper[1]));
+            }
+        }
+
+        if(deletedS.length() > 1){
+            for(String i : deletedS.substring(1,deletedS.length()).split(";")){
+                deleted.add(Integer.valueOf(i));
+            }
+        }
+
+
+
+        if(createdS.length() > 1){
+            for(String i : createdS.substring(1,createdS.length()).split(";")){
+                helper = i.split(":");
+                helping = "";
+                for(String c : helper[1].split("=")){
+                    helping+= (char) Integer.parseInt(c.replace(".","") );
+                }
+                created.put(Integer.parseInt(helper[0]),helping);
+
+            }
+
+        }
+
+
+
+        return new deserializeHelper(moved,deleted,created);
     }
 
     public String toString(){
         String ret = "";
 
         for(Line i : myLines){
-            ret = ret + i.toString();
+            ret = ret + i.toString()+"\n";
         }
 
         return ret;

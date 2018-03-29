@@ -1,9 +1,12 @@
 package sample;
 
 public class Line {
-    public int lineNumber;
-    public boolean hasChanged;
+
     public String line;
+
+    public void setLine(String s){
+        this.line = s;
+    }
 
     public Line(String line){
         this.line = line;
@@ -14,6 +17,6 @@ public class Line {
     }
 
     public String toString(){
-        return line+"\n";
+        return line;
     }
 }
