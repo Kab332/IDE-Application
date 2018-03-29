@@ -25,22 +25,28 @@ public class Document {
     public Document(String s, Tab tab){
         myLines = new ArrayList<>();
 
-        for(String i : s.split("\n")){
-            this.addLine(i);
-        }
+        this.setString(s);
 
         this.tab = tab;
 
     }
 
-    public Document(String s){
-        myLines = new ArrayList<>();
-
-
-
+    public void setString(String s){
+        this.deleteAllLines();
         for(String i : s.split("\n")){
             this.addLine(i);
         }
+    }
+
+    public void deleteAllLines(){
+        myLines = new ArrayList<>();
+        numOfLines = 0;
+    }
+
+    public Document(String s){
+        myLines = new ArrayList<>();
+
+        this.setString(s);
     }
 
     public void removeLine(int index){
@@ -221,6 +227,9 @@ public class Document {
          */
         String serialized = serializeChanges(movements,deletes,creates);
         System.out.println(serialized);
+
+        this.setString(inBundle);
+
         return serialized;
 
 

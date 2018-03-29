@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
 import java.net.URL;
@@ -300,14 +302,39 @@ public class Controller implements Initializable{
         return null;
     }
 
+
+    private boolean isPaused = false;
+    private boolean True = true;
+    private boolean False = false;
+
+    private void timedSend(Tab tab, TextArea ta){
+        System.out.println("Send to Users");
+        getDoc(tab).changed(ta.getText());
+        isPaused = False;
+    }
+
     private void textAreaAddListener(TextArea ta, Tab tab){
+
+
+
         ta.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(tab.getText() + " CHANGEEDDD");
-//                tabDocMap.get(tab).changed(ta.getText());
-                System.out.print("[ "+tabs.getTabs().indexOf(tab)+" : "+docList.indexOf(getDoc(tab))+" ]\n" );
-                getDoc(tab).changed(ta.getText());
+                System.out.print("Changes in tab # <vs> index in doc list | [ "+tabs.getTabs().indexOf(tab)+" : "+docList.indexOf(getDoc(tab))+" ]\n" );
+                if( tabs.getTabs().indexOf(tab) != docList.indexOf(getDoc(tab))){
+                    System.out.println("THE FUCKERY IS HIGH! I REPEAT! THE FUCKERY IS HIGH! ABORT MISSION");   //MEME
+                }
+                if(!isPaused){
+
+                    isPaused = True;
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2));
+                    pause.setOnFinished(event ->
+                            timedSend(tab,ta)
+                    );
+
+                    pause.play();
+
+                }
             }
         });
 
