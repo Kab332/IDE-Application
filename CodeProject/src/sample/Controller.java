@@ -32,6 +32,9 @@ public class Controller implements Initializable{
     }
 
     @FXML public void startServer(){
+        Main.TEACHER = new Server(Main.PORT);
+        Main.TEACHER.start();
+
         //Opens up server connection UI
         //receives PORT number
         //Displays all IP addresses

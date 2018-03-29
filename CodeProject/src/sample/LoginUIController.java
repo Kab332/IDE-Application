@@ -1,9 +1,13 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
-public class LoginUIController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class LoginUIController implements Initializable{
 
     @FXML TextField IP;
     @FXML TextField PORT;
@@ -11,7 +15,10 @@ public class LoginUIController {
     @FXML public void connectButton(){
         //Clicking the connect button in LoginUI
         Main.IP = IP.getText();
-        Main.PORT = Integer.parseInt(PORT.getText());
+
+//        PORT.setText("12888");
+//        PORT.setDisable(true);
+//        Main.PORT = Integer.parseInt(PORT.getText());
 
 
         Main.primaryStage.close();
@@ -29,4 +36,10 @@ public class LoginUIController {
         Main.primaryStage.show();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        PORT.setText("12888");
+        //PORT.setDisable(true);
+        Main.PORT = Integer.parseInt(PORT.getText());
+    }
 }

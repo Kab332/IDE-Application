@@ -15,6 +15,9 @@ public class Main extends Application {
     public static Scene loginUIScene;
     public static Controller controller;
     public static Scene studentUIScene;
+
+    public static Server TEACHER;
+    public static Client STUDENT;
     public static String IP;
     public static int PORT;
 
@@ -65,5 +68,7 @@ public class Main extends Application {
 
     public static void connectThisClient(){
         //Connect code client here
+        STUDENT = new Client(IP, PORT);
+        STUDENT.start();
     }
 }
