@@ -52,24 +52,6 @@ public class Controller implements Initializable{
         File mainDirectory = directoryChooser.showDialog(fileChooserStage);
         String fileDirectoryPath = mainDirectory.getPath();
 
-//        //save in this directory
-//        projectTreeView.setRoot(null);
-//        rootItem = null;
-//        this.currentFilePath = fileDirectoryPath;
-//        System.out.println(fileDirectoryPath);
-//
-//        try {
-//            processFile(mainDirectory, rootItem);
-//        } catch (IOException e) {
-//            System.out.println("Main Directory selection FileIO Problem.");
-//            e.printStackTrace();
-//        }
-//
-//        //currentFilePath is file path of file chosen
-//        //set tree view drop down to elements directory
-//        //Adding action listener
-//        //sets to child one, because child 0 is the same as rootitem
-//        projectTreeView.setRoot(rootItem.getChildren().get(0));
         treeViewfileDirectoryPath = fileDirectoryPath;
         treeViewmainDirectory = mainDirectory;
         updateTreeView();
@@ -81,7 +63,7 @@ public class Controller implements Initializable{
                 TreeItem<ProjectFile> selectedItem = (TreeItem<ProjectFile>)newValue;
                 if (selectedItem.getValue().toString().contains(".")) {//if selected value file name contains .txt
                     String foundFilePath = selectedItem.getValue().getFile().getAbsolutePath();//found file path is the selected folder path in tree view
-                    System.out.println(foundFilePath);
+//                    System.out.println(foundFilePath);
 
                     projectTreeView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
@@ -192,10 +174,8 @@ public class Controller implements Initializable{
                 divider = "/";
             }
             String fileFullPath = currentFilePath+divider+currentTab.getText();
-//            System.out.println("already Saved!!");
             AnchorPane ap = (AnchorPane) currentTab.getContent();
             TextArea ta = (TextArea) ap.getChildren().get(0);
-            //System.out.println(ta.getText());
             String content = ta.getText();
             try {
                 FileIOFunctions.writeToFile(fileFullPath, content);

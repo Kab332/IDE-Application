@@ -27,7 +27,6 @@ public class SaveUIController {
         }
 
         fileFullPath = workspacePath+divider+fileName;
-//        System.out.println(fileFullPath);
 
         AnchorPane ap = (AnchorPane) currentTab.getContent();
         TextArea ta = (TextArea) ap.getChildren().get(0);
