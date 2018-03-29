@@ -40,6 +40,15 @@ public class Controller implements Initializable{
 
     @FXML public void startAsStudent(){
         //Current UI scene switches to student UI
+        try {
+            Parent layout = FXMLLoader.load(getClass().getResource("LoginUI.fxml"));
+            Main.primaryStage.setTitle("Log In as Client");
+            Main.primaryStage.setScene(new Scene(layout, Main.SceneWidth, Main.SceneHeight));
+            Main.primaryStage.show();
+        }catch (IOException e){
+            System.out.println("Couldn't open LoginUI.fxml");
+            e.printStackTrace();
+        }
     }
 
     @FXML public void openWorkspace(){
