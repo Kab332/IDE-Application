@@ -41,7 +41,7 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="New Tab">
+                                <MenuItem fx:id="NewTab" mnemonicParsing="false" text="New Tab">
                                     <accelerator>
                                         <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                                     </accelerator></MenuItem>
@@ -57,12 +57,17 @@
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Format Text">
+                                <MenuItem mnemonicParsing="false" text="Copy Teacher Code To User">
                                     <accelerator>
-                                        <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                                        <KeyCodeCombination alt="UP" code="C" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                                     </accelerator></MenuItem>
                             </items>
                         </Menu>
+                  <Menu mnemonicParsing="false" text="Return">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#backToTeacherScene" text="Back to IDE" />
+                    </items>
+                  </Menu>
                     </menus>
                 </MenuBar>
             </children>
