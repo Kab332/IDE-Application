@@ -27,14 +27,6 @@ public class Controller implements Initializable{
     @FXML TabPane tabs;
     private SaveUIController saveUI = new SaveUIController();
 
-    public TabPane getTabs() {
-        return tabs;
-    }
-
-    public void setTabs(TabPane tabs) {
-        this.tabs = tabs;
-    }
-
     @FXML public void openNewTab(){
         addTab();
     }
@@ -191,28 +183,51 @@ public class Controller implements Initializable{
     private String currentFilePath = "";
 
     @FXML public void save(){
-        if(currentFilePath.equals("")){
-            //if directory not chosen already
-            openWorkspace();
-        }else {
-            Stage saveUISate = new Stage();
+        Tab currentTab = tabs.getTabs().get(tabs.getSelectionModel().getSelectedIndex());
+        if(!currentTab.getText().contains("Untitled")){
+            String divider;
+            if(currentFilePath.contains("\\")){
+                divider = "\\";
+            }else{
+                divider = "/";
+            }
+            String fileFullPath = currentFilePath+divider+currentTab.getText();
+//            System.out.println("already Saved!!");
+            AnchorPane ap = (AnchorPane) currentTab.getContent();
+            TextArea ta = (TextArea) ap.getChildren().get(0);
+            //System.out.println(ta.getText());
+            String content = ta.getText();
             try {
-                Parent layout = FXMLLoader.load(getClass().getResource("saveUI.fxml"));
-                saveUISate.setTitle("Save File");
-                saveUISate.setScene(new Scene(layout));
-                saveUISate.show();
+                FileIOFunctions.writeToFile(fileFullPath, content);
             } catch (IOException e) {
-                System.out.println("Couldn't open saveUI.fxml");
                 e.printStackTrace();
             }
 
-            saveUI.workspacePath = currentFilePath;
-            saveUI.thisStage = saveUISate;
-            saveUI.currentTab = tabs.getTabs().get(tabs.getSelectionModel().getSelectedIndex());
+        }else {
+            if (currentFilePath.equals("")) {
+                //if directory not chosen already
+                openWorkspace();
+            } else {
+                Stage saveUISate = new Stage();
+                try {
+                    Parent layout = FXMLLoader.load(getClass().getResource("saveUI.fxml"));
+                    saveUISate.setTitle("Save File");
+                    saveUISate.setScene(new Scene(layout));
+                    saveUISate.show();
+                } catch (IOException e) {
+                    System.out.println("Couldn't open saveUI.fxml");
+                    e.printStackTrace();
+                }
 
-            //saveUI.setProjectTreeView(projectTreeView);
-            FileIOFunctions.projectTreeView = projectTreeView;
+                saveUI.workspacePath = currentFilePath;
+                saveUI.thisStage = saveUISate;
+                saveUI.currentTab = tabs.getTabs().get(tabs.getSelectionModel().getSelectedIndex());
+
+                //saveUI.setProjectTreeView(projectTreeView);
+                FileIOFunctions.projectTreeView = projectTreeView;
+            }
         }
+
     }
 
     @FXML public void formatCode(){
