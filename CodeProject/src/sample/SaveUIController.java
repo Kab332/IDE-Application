@@ -13,6 +13,8 @@ public class SaveUIController {
     public static Tab currentTab;
     public String fileFullPath;
 
+    public boolean updateTree = true;
+
     private String divider = "";
 
     @FXML public void saveUISaveButton(){
@@ -28,9 +30,9 @@ public class SaveUIController {
 
         fileFullPath = workspacePath+divider+fileName;
 
-        AnchorPane ap = (AnchorPane) currentTab.getContent();
-        TextArea ta = (TextArea) ap.getChildren().get(0);
         try {
+            AnchorPane ap = (AnchorPane) currentTab.getContent();
+            TextArea ta = (TextArea) ap.getChildren().get(0);
             FileIOFunctions.writeToFile(fileFullPath, ta.getText());
         } catch (IOException e) {
             //Writing to file failed
@@ -40,7 +42,10 @@ public class SaveUIController {
 
         currentTab.setText(fileName);
         thisStage.close();
-        updateTreeView();
+
+        if(updateTree) {
+            updateTreeView();
+        }
     }
 
     @FXML public void saveUICancelButton(){

@@ -66,8 +66,8 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Connections">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#startServer" text="Start Server" />
-                        <MenuItem mnemonicParsing="false" onAction="#startAsStudent" text="Start As Student" />
+                    <MenuItem fx:id="connectServerButton" mnemonicParsing="false" onAction="#startServer" text="Start Server" />
+                        <MenuItem fx:id="connectClientButton" mnemonicParsing="false" onAction="#startAsStudent" text="Start As Student" />
                   </items>
                 </Menu>
               </menus>

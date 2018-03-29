@@ -27,6 +27,9 @@ public class Controller implements Initializable{
     @FXML TabPane tabs;
     private SaveUIController saveUI = new SaveUIController();
 
+    @FXML MenuItem connectServerButton;
+    @FXML MenuItem connectClientButton;
+
     @FXML public void openNewTab(){
         addTab();
     }
@@ -34,11 +37,8 @@ public class Controller implements Initializable{
     @FXML public void startServer(){
         Main.TEACHER = new Server(Main.PORT);
         Main.TEACHER.start();
-
-        //Opens up server connection UI
-        //receives PORT number
-        //Displays all IP addresses
-        //Start server button
+        connectClientButton.setDisable(true);
+        connectServerButton.setDisable(true);
     }
 
     @FXML public void startAsStudent(){
