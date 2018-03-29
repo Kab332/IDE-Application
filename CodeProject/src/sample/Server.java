@@ -1,12 +1,6 @@
 package sample;
 
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class Server extends Thread {
     ServerSocket serverSocket;
@@ -14,9 +8,9 @@ public class Server extends Thread {
 
     int server_port;
     int number_of_clients = 0;
-
-
     int max_clients = 999;
+
+    boolean endOfSession = false;
 
     public Server() {
         System.out.println("Please pass a port as an argument.");
@@ -30,27 +24,28 @@ public class Server extends Thread {
     public void run() {
         try {
             serverSocket = new ServerSocket(server_port);
-            serverSocket.setSoTimeout(0);
 
             threads = new ClientConnectionHandler[max_clients];
 
-            while (true) {
+            while (!endOfSession && (number_of_clients < max_clients)) {
                 threads[number_of_clients] = new ClientConnectionHandler(serverSocket.accept(), number_of_clients+1);
                 threads[number_of_clients].start();
 
                 System.out.println("Client #" + (number_of_clients + 1) + " has connected");
                 number_of_clients++;
             }
+            serverSocket.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void sendAll(String message){
+    public void sendAll(String command, String message){
         try {
             for (int i = 0; i < number_of_clients; i++) {
                 if (threads[i].isOpen) {
                     System.out.println("Sent to Client #" + threads[i].clientNumber);
+                    threads[i].sendMessage(command);
                     threads[i].sendMessage(message);
                 }
             }
@@ -59,4 +54,8 @@ public class Server extends Thread {
         }
     }
 
+    public void closeServer() {
+        sendAll("CLOSE", "");
+        endOfSession = true;
+    }
 }
