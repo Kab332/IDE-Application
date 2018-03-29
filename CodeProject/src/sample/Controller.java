@@ -276,12 +276,16 @@ public class Controller implements Initializable{
 
         String tabInfo = "";
 
-        for (Tab tab : tabList) {
-            ap = (AnchorPane) tab.getContent();
+        for (int i = 0; i < tabList.size(); i++) {
+            if (i > 0) {
+                tabInfo += "\n";
+            }
+
+            ap = (AnchorPane) tabList.get(i).getContent();
             ta = (TextArea) ap.getChildren().get(0);
 
-            tabInfo += tab.getText();
-            tabInfo += "\n" + ta.getText() + "\n";
+            tabInfo += tabList.get(i).getText();
+            tabInfo += "\n" + ta.getText();
         }
 
         return tabInfo;
