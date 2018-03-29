@@ -15,10 +15,6 @@ public class ClientConnectionHandler extends Thread {
 
     public ClientConnectionHandler(Socket socket, int number) {
         clientSocket = socket;
-        try {
-            clientSocket.setSoTimeout(0);
-        } catch (Exception e) {}
-
         clientNumber = number;
         isOpen = true;
 
