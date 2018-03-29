@@ -23,6 +23,7 @@ public class Client extends Thread{
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             isOpen = true;
+            System.out.println("Client is connected.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +52,7 @@ public class Client extends Thread{
     }
 
     public void processCommand(String command) throws Exception {
-        if (command.equals("DEFAULT")) {
+        if (command.equals("CHANGE")) {
             currentMessage = readMessage();
         } else if (command.equals("CLOSE")) {
             closeClient();
@@ -64,7 +65,7 @@ public class Client extends Thread{
 
     public void closeClient() throws IOException {
         isOpen = false;
-        sendMessage("CLOSED");
+        sendMessage("CLOSE");
     }
 
     public void sendMessage(String message) {

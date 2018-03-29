@@ -27,19 +27,26 @@ public class ClientConnectionHandler extends Thread {
     }
 
     public void run() {
-        String message = "";
-        while (isOpen) {
-            message = readMessage();
-            if (message.equals("CLOSED")) {
-                System.out.println("Client #" + clientNumber + " has closed");
-                isOpen = false;
-            }
-        }
+        String request = "";
 
         try {
+            while (isOpen) {
+                request = readMessage();
+                processRequest(request);
+            }
+
             clientSocket.close();
+
         } catch (Exception e) {}
     }
+
+    public void processRequest(String request) throws Exception {
+        if (request.equals("CLOSE")) {
+            System.out.println("Client #" + clientNumber + " has closed");
+            isOpen = false;
+        } else {}
+    }
+
 
     public void sendMessage(String message) {
         sendMessageAsByte(message.getBytes());

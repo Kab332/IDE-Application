@@ -10,7 +10,7 @@ public class Server extends Thread {
     int number_of_clients = 0;
     int max_clients = 999;
 
-    boolean endOfSession = false;
+    boolean isOpen = true;
 
     public Server() {
         System.out.println("Please pass a port as an argument.");
@@ -24,10 +24,11 @@ public class Server extends Thread {
     public void run() {
         try {
             serverSocket = new ServerSocket(server_port);
-
             threads = new ClientConnectionHandler[max_clients];
 
-            while (!endOfSession && (number_of_clients < max_clients)) {
+            System.out.println("Server has started.");
+
+            while (isOpen && (number_of_clients < max_clients)) {
                 threads[number_of_clients] = new ClientConnectionHandler(serverSocket.accept(), number_of_clients+1);
                 threads[number_of_clients].start();
 
@@ -44,9 +45,21 @@ public class Server extends Thread {
         try {
             for (int i = 0; i < number_of_clients; i++) {
                 if (threads[i].isOpen) {
-                    System.out.println("Sent to Client #" + threads[i].clientNumber);
                     threads[i].sendMessage(command);
                     threads[i].sendMessage(message);
+                    System.out.println("Sent to Client #" + threads[i].clientNumber);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void sendAll(String command){
+        try {
+            for (int i = 0; i < number_of_clients; i++) {
+                if (threads[i].isOpen) {
+                    threads[i].sendMessage(command);
                 }
             }
         }catch (Exception e){
@@ -55,7 +68,7 @@ public class Server extends Thread {
     }
 
     public void closeServer() {
-        sendAll("CLOSE", "");
-        endOfSession = true;
+        sendAll("CLOSE");
+        isOpen = false;
     }
 }
