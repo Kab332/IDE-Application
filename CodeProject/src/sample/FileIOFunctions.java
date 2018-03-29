@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.fxml.FXML;
+import javafx.scene.control.TreeView;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileIOFunctions {
+    //memory holder for saveUI
+    public static TreeView<ProjectFile> projectTreeView;
+
     //This method writes to filePath, which is the abs file path, and writes the content
     public static void writeToFile(String filePath, String content) throws IOException {
         FileWriter fileOut = new FileWriter(filePath);

@@ -210,7 +210,8 @@ public class Controller implements Initializable{
             saveUI.thisStage = saveUISate;
             saveUI.currentTab = tabs.getTabs().get(tabs.getSelectionModel().getSelectedIndex());
 
-            saveUI.setProjectTreeView(projectTreeView);
+            //saveUI.setProjectTreeView(projectTreeView);
+            FileIOFunctions.projectTreeView = projectTreeView;
         }
     }
 

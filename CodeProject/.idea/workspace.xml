@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/sample/FileIOFunctions.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" afterPath="$PROJECT_DIR$/src/sample/Controller.java" />
+      <change beforePath="$PROJECT_DIR$/src/sample/FileIOFunctions.java" afterPath="$PROJECT_DIR$/src/sample/FileIOFunctions.java" />
       <change beforePath="$PROJECT_DIR$/src/sample/SaveUIController.java" afterPath="$PROJECT_DIR$/src/sample/SaveUIController.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
@@ -63,11 +63,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="276" column="53" lean-forward="false" selection-start-line="276" selection-start-column="53" selection-end-line="276" selection-end-column="53" />
+            <state relative-caret-position="306">
+              <caret line="213" column="62" lean-forward="false" selection-start-line="213" selection-start-column="62" selection-end-line="213" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#874#875#0" expanded="true" />
@@ -79,23 +79,32 @@
                 <element signature="method#changed#0;class#2732:5103" expanded="false" />
                 <element signature="e#5148#5149#0" expanded="true" />
                 <element signature="e#5180#5181#0" expanded="true" />
-                <element signature="e#8527#8528#0" expanded="true" />
-                <element signature="e#8557#8558#0" expanded="true" />
+                <element signature="e#8592#8593#0" expanded="true" />
+                <element signature="e#8622#8623#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SaveUIController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/SaveUIController.java">
+      <file leaf-file-name="FileIOFunctions.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sample/FileIOFunctions.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-50">
-              <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
+            <state relative-caret-position="58">
+              <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#784#785#0" expanded="true" />
-                <element signature="e#835#836#0" expanded="true" />
+                <element signature="method#getData#0;class#FileIOFunctions#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveUIController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/sample/SaveUIController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -139,8 +148,8 @@
         <option value="$PROJECT_DIR$/src/sample/saveUI.fxml" />
         <option value="$PROJECT_DIR$/src/sample/Main.java" />
         <option value="$PROJECT_DIR$/src/sample/FileIOFunctions.java" />
-        <option value="$PROJECT_DIR$/src/sample/SaveUIController.java" />
         <option value="$PROJECT_DIR$/src/sample/Controller.java" />
+        <option value="$PROJECT_DIR$/src/sample/SaveUIController.java" />
       </list>
     </option>
   </component>
@@ -476,7 +485,7 @@
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1522254551611" duration="708000" />
-      <workItem from="1522274820351" duration="12478000" />
+      <workItem from="1522274820351" duration="12944000" />
     </task>
     <task id="LOCAL-00001" summary="Updated UI, Added Bunch of functionalities">
       <created>1522274396455</created>
@@ -506,11 +515,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522278855009</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="SaveFunction Kinda works">
+      <created>1522287370391</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1522287370391</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14635000" />
+    <option name="totallyTimeSpent" value="15101000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-4" width="1366" height="725" extended-state="6" />
@@ -563,7 +579,8 @@
     <MESSAGE value="added ProjectFile.java, and style.css" />
     <MESSAGE value="Updating sample.fxml" />
     <MESSAGE value="Completed Open function on the ide" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed Open function on the ide" />
+    <MESSAGE value="SaveFunction Kinda works" />
+    <option name="LAST_COMMIT_MESSAGE" value="SaveFunction Kinda works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -601,8 +618,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -645,8 +662,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -690,8 +707,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -746,8 +763,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -790,8 +807,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -853,8 +870,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -886,8 +903,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -930,8 +947,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -975,8 +992,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1031,8 +1048,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1075,8 +1092,8 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1149,8 +1166,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/FileIOFunctions.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="19" column="64" lean-forward="false" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
+        <state relative-caret-position="58">
+          <caret line="13" column="30" lean-forward="false" selection-start-line="13" selection-start-column="30" selection-end-line="13" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#getData#0;class#FileIOFunctions#0" expanded="false" />
@@ -1158,22 +1175,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/SaveUIController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-50">
-          <caret line="60" column="10" lean-forward="false" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#784#785#0" expanded="true" />
-            <element signature="e#835#836#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="276" column="53" lean-forward="false" selection-start-line="276" selection-start-column="53" selection-end-line="276" selection-end-column="53" />
+        <state relative-caret-position="306">
+          <caret line="213" column="62" lean-forward="false" selection-start-line="213" selection-start-column="62" selection-end-line="213" selection-end-column="62" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#874#875#0" expanded="true" />
@@ -1185,9 +1190,17 @@
             <element signature="method#changed#0;class#2732:5103" expanded="false" />
             <element signature="e#5148#5149#0" expanded="true" />
             <element signature="e#5180#5181#0" expanded="true" />
-            <element signature="e#8527#8528#0" expanded="true" />
-            <element signature="e#8557#8558#0" expanded="true" />
+            <element signature="e#8592#8593#0" expanded="true" />
+            <element signature="e#8622#8623#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/SaveUIController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="26" lean-forward="false" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
