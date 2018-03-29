@@ -1,8 +1,11 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,6 +19,9 @@ public class FileIOFunctions {
     public static TreeView<ProjectFile> projectTreeView;
 //    public static Controller c;
 
+    public static TabPane teacherPane;
+    public static TabPane studentPane;
+
     public static List<Document> docList;
     public static TabPane tabs;
 
@@ -26,6 +32,30 @@ public class FileIOFunctions {
         fileOut.close();
     }
 
+    public static TextArea addTab(String tabName, TabPane tabs, boolean editable){
+        //create new tab on menu button press of new tab or Ctrl+N
+        if(tabName.contains("Untitled")){
+            tabName += " " + tabName + "Tab " + (tabs.getTabs().size() + 1);
+        }
+        Tab tab = new Tab(tabName);
+        tabs.getTabs().add(tab);
+        tabs.getSelectionModel().select(tab);
+
+        //Instantiate New Text area
+        TextArea textArea = new TextArea();
+        textArea.getStyleClass().add("code");
+        textArea.setDisable(editable);
+
+        //Intantiate anchor
+        AnchorPane textAreaAnchor = new AnchorPane(textArea);
+        textAreaAnchor.setTopAnchor(textArea, 0.0);
+        textAreaAnchor.setBottomAnchor(textArea, 0.0);
+        textAreaAnchor.setLeftAnchor(textArea, 0.0);
+        textAreaAnchor.setRightAnchor(textArea, 0.0);
+        tab.setContent(textAreaAnchor);
+
+        return textArea;
+    }
 
     //This method reads a file using path name and delimitor
     public static String getData(String path, String delimiter) {
