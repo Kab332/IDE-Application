@@ -17,6 +17,7 @@ public class TextBox implements Initializable{
 
     @FXML TextArea text;
     private TextEditorAI ai = new TextEditorAI();
+    private int call = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -24,11 +25,19 @@ public class TextBox implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 //TextEditor AI
-                ai.arrowKeyListener(text);
+               //ai.arrowKeyListener(text);
                 ai.set_oldValue(oldValue);
                 ai.set_newValue(newValue);
 
-                ai.textAreaListener(text);
+                try{
+                    //ai.arrowKeyListener(text);
+                    ai.textAreaListener(text);
+                } catch (Exception e){
+
+                }
+
+
+
 
 
 
