@@ -29,16 +29,37 @@ public class Client extends Thread{
     }
 
     public void run() {
-        while (isOpen) {
-            if (isOpen) {
-                currentMessage = readMessage();
-            }
-            System.out.println(currentMessage);
-        }
-
+        String command = "";
         try {
+
+            while (isOpen) {
+                command = readMessage();
+
+                processCommand(command);
+
+                System.out.println(command);
+                System.out.println("------------------");
+                System.out.println(currentMessage);
+                System.out.println("------------------");
+            }
+
             socket.close();
+
         } catch (Exception e) {}
+
+        System.exit(0);
+    }
+
+    public void processCommand(String command) throws Exception {
+        if (command.equals("DEFAULT")) {
+            currentMessage = readMessage();
+        } else if (command.equals("CLOSE")) {
+            closeClient();
+        } else if (command.equals("TABS")) {
+            // Potential future code
+        } else {
+            currentMessage = readMessage();
+        }
     }
 
     public void closeClient() throws IOException {
@@ -78,5 +99,4 @@ public class Client extends Thread{
 
         return data;
     }
-
 }
