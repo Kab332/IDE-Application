@@ -105,6 +105,7 @@ public class Controller implements Initializable{
         });
     }
 
+
     private String treeViewfileDirectoryPath;
     private File treeViewmainDirectory;
     public void updateTreeView(){
@@ -227,6 +228,8 @@ public class Controller implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         //adds the initial tab
         addTab();
+        FileIOFunctions.tabs = tabs;
+        FileIOFunctions.docList = docList;
     }
 
     private void addTab(){
@@ -309,7 +312,12 @@ public class Controller implements Initializable{
 
     private void timedSend(Tab tab, TextArea ta){
         System.out.println("Send to Users");
-        getDoc(tab).changed(ta.getText());
+        String serialized = getDoc(tab).changed(ta.getText());
+
+
+        Main.TEACHER.sendAll("CHANGE",String.valueOf(docList.indexOf(getDoc(tab))),serialized);
+
+
         isPaused = False;
     }
 

@@ -1,6 +1,7 @@
 package sample;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeView;
 
 import java.io.BufferedReader;
@@ -13,6 +14,10 @@ import java.util.List;
 public class FileIOFunctions {
     //memory holder for saveUI
     public static TreeView<ProjectFile> projectTreeView;
+//    public static Controller c;
+
+    public static List<Document> docList;
+    public static TabPane tabs;
 
     //This method writes to filePath, which is the abs file path, and writes the content
     public static void writeToFile(String filePath, String content) throws IOException {

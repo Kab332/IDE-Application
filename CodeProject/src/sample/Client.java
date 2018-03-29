@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.scene.control.Tab;
+import jdk.nashorn.api.tree.ForInLoopTree;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -9,6 +12,7 @@ public class Client extends Thread{
     DataInputStream in;
 
     boolean isOpen;
+
 
     String currentMessage;
 
@@ -35,31 +39,57 @@ public class Client extends Thread{
 
             while (isOpen) {
                 command = readMessage();
-
                 processCommand(command);
 
-                System.out.println(command);
-                System.out.println("------------------");
-                System.out.println(currentMessage);
-                System.out.println("------------------");
             }
 
             socket.close();
 
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            e.printStackTrace();
+//            System.out.println(e.getStackTrace());
 
-        System.exit(0);
+        }
+
+        System.out.println("CLOSING");
+//        System.exit(0);
+    }
+
+
+    public void serverBridge(String tabNum, String serialString){
+        System.out.println("Bridged");
+        getDoc(FileIOFunctions.tabs.getTabs().get(Integer.valueOf(tabNum))).change(serialString);
+    }
+
+    private Document getDoc(Tab tab){
+        for(Document i : FileIOFunctions.docList){
+            if(i.tab.equals(tab)){
+                return i;
+            }
+        }
+        return null;
     }
 
     public void processCommand(String command) throws Exception {
         if (command.equals("CHANGE")) {
+            String tabNum = readMessage();
             currentMessage = readMessage();
+
+            System.out.println("TabNum: "+tabNum);
+            System.out.println("currentMessage: "+currentMessage);
+
+//            Main.controller.serverBridge(tabNum,currentMessage);
+
+            // Thomas code
+            serverBridge(tabNum,currentMessage);
+
         } else if (command.equals("CLOSE")) {
             closeClient();
         } else if (command.equals("TABS")) {
-            // Potential future code
+
         } else {
             currentMessage = readMessage();
+
         }
     }
 

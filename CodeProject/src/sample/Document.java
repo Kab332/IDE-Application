@@ -179,8 +179,9 @@ public class Document {
         return ret;
     }
 
-    public void change(String toApply){
-        deserializeHelper deserialized = deserialize(toApply);
+    public void change(String serialString){
+        System.out.println("gotChange: ["+serialString+"]");
+        deserializeHelper deserialized = deserialize(serialString);
 
         Map<Integer,Integer> m = deserialized.moved;
 

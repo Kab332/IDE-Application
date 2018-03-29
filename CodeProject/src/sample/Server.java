@@ -55,6 +55,22 @@ public class Server extends Thread {
         }
     }
 
+
+    public void sendAll(String command, String tabNum, String message){
+        try {
+            for (int i = 0; i < number_of_clients; i++) {
+                if (threads[i].isOpen) {
+                    threads[i].sendMessage(command);
+                    threads[i].sendMessage(tabNum);
+                    threads[i].sendMessage(message);
+                    System.out.println("Sent to Client #" + threads[i].clientNumber);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public void sendAll(String command){
         try {
             for (int i = 0; i < number_of_clients; i++) {
