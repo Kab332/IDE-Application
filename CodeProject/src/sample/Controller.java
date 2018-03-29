@@ -2,6 +2,7 @@ package sample;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,7 @@ import java.util.ResourceBundle;
 public class Controller implements Initializable{
     @FXML private TreeView<ProjectFile> projectTreeView;
     @FXML TabPane tabs;
+    private SaveUIController saveUI = new SaveUIController();
 
     public TabPane getTabs() {
         return tabs;
@@ -58,24 +60,27 @@ public class Controller implements Initializable{
         File mainDirectory = directoryChooser.showDialog(fileChooserStage);
         String fileDirectoryPath = mainDirectory.getPath();
 
-        //save in this directory
-        projectTreeView.setRoot(null);
-        rootItem = null;
-        this.currentFilePath = fileDirectoryPath;
-        System.out.println(fileDirectoryPath);
-
-        try {
-            processFile(mainDirectory, rootItem);
-        } catch (IOException e) {
-            System.out.println("Main Directory selection FileIO Problem.");
-            e.printStackTrace();
-        }
-
-        //currentFilePath is file path of file chosen
-        //set tree view drop down to elements directory
-        //Adding action listener
-        //sets to child one, because child 0 is the same as rootitem
-        projectTreeView.setRoot(rootItem.getChildren().get(0));
+//        //save in this directory
+//        projectTreeView.setRoot(null);
+//        rootItem = null;
+//        this.currentFilePath = fileDirectoryPath;
+//        System.out.println(fileDirectoryPath);
+//
+//        try {
+//            processFile(mainDirectory, rootItem);
+//        } catch (IOException e) {
+//            System.out.println("Main Directory selection FileIO Problem.");
+//            e.printStackTrace();
+//        }
+//
+//        //currentFilePath is file path of file chosen
+//        //set tree view drop down to elements directory
+//        //Adding action listener
+//        //sets to child one, because child 0 is the same as rootitem
+//        projectTreeView.setRoot(rootItem.getChildren().get(0));
+        treeViewfileDirectoryPath = fileDirectoryPath;
+        treeViewmainDirectory = mainDirectory;
+        updateTreeView();
 
         projectTreeView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<ProjectFile>>() {
             //This function is change in selection of the tree view
@@ -83,16 +88,6 @@ public class Controller implements Initializable{
             public void changed(ObservableValue<? extends TreeItem<ProjectFile>> observable, TreeItem<ProjectFile> oldValue, TreeItem<ProjectFile> newValue) {
                 TreeItem<ProjectFile> selectedItem = (TreeItem<ProjectFile>)newValue;
                 if (selectedItem.getValue().toString().contains(".")) {//if selected value file name contains .txt
-
-//                    //now open the file and set content of text inside this
-//                    String foundFilePath = selectedItem.getValue().getFile().getAbsolutePath();//found file path is the selected folder path in tree view
-//                    Main.getStage().setTitle(selectedItem.getValue().toString());
-//                    if(!foundFilePath.equals("")){
-//                        String content = getData(foundFilePath, " ");
-//                        editor.setText(content);
-//
-//
-//                    }
                     String foundFilePath = selectedItem.getValue().getFile().getAbsolutePath();//found file path is the selected folder path in tree view
                     System.out.println(foundFilePath);
 
@@ -117,7 +112,7 @@ public class Controller implements Initializable{
                                     String tabName = selectedItem.getValue().getFile().getName();
                                     TextArea textArea = addTab(tabName);
                                     //tab added
-                                    String content = getData(foundFilePath, "");
+                                    String content = FileIOFunctions.getData(foundFilePath, "");
                                     textArea.setText(content);
                                 }
                             }
@@ -126,6 +121,35 @@ public class Controller implements Initializable{
                 }
             }
         });
+    }
+
+    public void runTreeViewUpdate(){
+        updateTreeView();
+    }
+
+    private String treeViewfileDirectoryPath;
+    private File treeViewmainDirectory;
+    public void updateTreeView(){
+        String fileDirectoryPath = treeViewfileDirectoryPath;
+        File mainDirectory = treeViewmainDirectory;
+        //save in this directory
+        projectTreeView.setRoot(null);
+        rootItem = null;
+        currentFilePath = fileDirectoryPath;
+        System.out.println(fileDirectoryPath);
+
+        try {
+            processFile(mainDirectory, rootItem);
+        } catch (IOException e) {
+            System.out.println("Main Directory selection FileIO Problem.");
+            e.printStackTrace();
+        }
+
+        //currentFilePath is file path of file chosen
+        //set tree view drop down to elements directory
+        //Adding action listener
+        //sets to child one, because child 0 is the same as rootitem
+        projectTreeView.setRoot(rootItem.getChildren().get(0));
     }
 
     /**
@@ -144,6 +168,9 @@ public class Controller implements Initializable{
         if (file.isDirectory()) {
             //if directory set expandable and add to root
             TreeItem<ProjectFile> subRootItem = new TreeItem<>(new ProjectFile(file));
+
+//            saveUI.rootItem = subRootItem;///////////////////////////////////////
+
             subRootItem.setExpanded(true);
             root.getChildren().add(subRootItem);
 
@@ -161,77 +188,31 @@ public class Controller implements Initializable{
         }
     }
 
-    private String currentFilePath;
+    private String currentFilePath = "";
 
     @FXML public void save(){
-        ////run save UI
-        //runSaveUI();
-        try {
-            Parent layout = FXMLLoader.load(getClass().getResource("saveUI.fxml"));
+        if(currentFilePath.equals("")){
+            //if directory not chosen already
+            openWorkspace();
+        }else {
             Stage saveUISate = new Stage();
-            saveUISate.setTitle("Save File");
-            saveUISate.setScene(new Scene(layout));
-            saveUISate.show();
-        } catch (IOException e) {
-            System.out.println("Couldn't open saveUI.fxml");
-            e.printStackTrace();
-        }
-
-        SaveUIController saveUI = new SaveUIController();
-        saveUI.workspacePath = currentFilePath;
-        //////////////////////////////////////////
-
-
-
-        ////get file name, add file name to currentFilePath
-//        String fileName = saveUIController.saveUITextField.getText();
-//        this.currentFilePath += fileName;
-//        System.out.println(fileName);
-        ////get selected name, and set it to written name then write to file
-        //Tab currentTab = getSelectedTab();
-        //currentTab.setName(fileName);
-//
-//        if(!this.currentFilePath.equals("")) {
-//            writeToFile(this.currentFilePath, .getText());
-//        }
-    }
-
-    //This method writes to filePath, which is the abs file path, and writes the content
-    private void writeToFile(String filePath, String content) throws IOException {
-        FileWriter fileOut = new FileWriter(filePath);
-        fileOut.append(content);
-        fileOut.close();
-    }
-
-
-    //This method reads a file using path name and delimitor
-    public String getData(String path, String delimiter) {
-
-        String content = "";
-        List<String> srcList = new ArrayList<>();
-        // Special Case
-        if (path == null || path.length() == 0) {
-            return "";
-        }
-        if(delimiter == null || delimiter.length() == 0) {
-            delimiter = ",";
-        }
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            //Read the next line until end of file
-            for (String line; (line = br.readLine()) != null;) {
-                content+= line +  "\n";
+            try {
+                Parent layout = FXMLLoader.load(getClass().getResource("saveUI.fxml"));
+                saveUISate.setTitle("Save File");
+                saveUISate.setScene(new Scene(layout));
+                saveUISate.show();
+            } catch (IOException e) {
+                System.out.println("Couldn't open saveUI.fxml");
+                e.printStackTrace();
             }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return content;
+            saveUI.workspacePath = currentFilePath;
+            saveUI.thisStage = saveUISate;
+            saveUI.currentTab = tabs.getTabs().get(tabs.getSelectionModel().getSelectedIndex());
+
+            saveUI.setProjectTreeView(projectTreeView);
+        }
     }
-
-//    @FXML public void saveAs(){
-//
-//    }
 
     @FXML public void formatCode(){
         //this is where the text is formatted
@@ -289,6 +270,25 @@ public class Controller implements Initializable{
         tab.setContent(textAreaAnchor);
 
         return textArea;
+    }
+
+
+    public String getAllTexts(){
+        ObservableList<Tab> tabList = tabs.getTabs();
+        AnchorPane ap;
+        TextArea ta;
+
+        String tabInfo = "";
+
+        for (Tab tab : tabList) {
+            ap = (AnchorPane) tab.getContent();
+            ta = (TextArea) ap.getChildren().get(0);
+
+            tabInfo += tab.getText();
+            tabInfo += "\n" + ta.getText() + "\n";
+        }
+
+        return tabInfo;
     }
 
 
