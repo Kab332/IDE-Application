@@ -36,11 +36,8 @@ public class Client extends Thread{
         try {
 
             while (isOpen) {
-                System.out.println("Request Process Command: " + command + ".");
 
                 command = readMessage();
-
-
                 processCommand(command);
             }
 
@@ -66,8 +63,6 @@ public class Client extends Thread{
             System.out.println(tabNames);
             System.out.println(tabContents);
 
-        }else if(command.equals(" ")){
-            System.out.println();
         }else {
             currentMessage = readMessage();
         }
