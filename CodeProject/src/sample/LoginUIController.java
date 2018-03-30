@@ -41,5 +41,7 @@ public class LoginUIController implements Initializable{
         PORT.setText("12888");
         //PORT.setDisable(true);
         Main.PORT = Integer.parseInt(PORT.getText());
+        IP.setText("localhost");
+        Main.IP = IP.getText();
     }
 }
