@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -56,6 +57,39 @@ public class FileIOFunctions {
 
         return textArea;
     }
+
+    public static String [] getAllTexts(){
+        ObservableList<Tab> tabList = tabs.getTabs();
+        String [] array = new String[2];
+
+        AnchorPane ap;
+        TextArea ta;
+
+        String names = "";
+        String contents= "";
+
+        String text;
+
+        for (int i = 0; i < tabList.size(); i++) {
+            ap = (AnchorPane) tabList.get(i).getContent();
+            ta = (TextArea) ap.getChildren().get(0);
+            text = ta.getText();
+
+            if (i > 0) {
+                names += "@";
+                contents += "---------------------123456---------------------";
+            }
+
+            names += tabList.get(i).getText();
+            contents += text;
+        }
+
+        array[0] = names;
+        array[1] = contents;
+
+        return array;
+    }
+
 
     //This method reads a file using path name and delimitor
     public static String getData(String path, String delimiter) {

@@ -24,6 +24,9 @@ public class StudentFxmlController implements Initializable{
 
     private SaveUIController saveUI = new SaveUIController();
 
+    public StudentFxmlController(){
+        System.out.println("Student FXML Constructor.");
+    }
 
     @FXML public void backToTeacherScene(){
         Main.primaryStage.close();
@@ -131,6 +134,10 @@ public class StudentFxmlController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        System.out.println("Student FXML Controller Initialized.");
+//        System.out.println(studentTabPane == null);
+//        System.out.println(teacherTabPane == null);
+        FileIOFunctions.studentPane = studentTabPane;
+        FileIOFunctions.teacherPane = teacherTabPane;
     }
 }

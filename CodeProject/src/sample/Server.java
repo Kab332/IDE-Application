@@ -14,7 +14,7 @@ public class Server extends Thread {
 
     public Server() {
         System.out.println("Please pass a port as an argument.");
-        System.exit(0);
+        //System.exit(0);
     }
 
     public Server(int port) {
@@ -46,22 +46,6 @@ public class Server extends Thread {
             for (int i = 0; i < number_of_clients; i++) {
                 if (threads[i].isOpen) {
                     threads[i].sendMessage(command);
-                    threads[i].sendMessage(message);
-                    System.out.println("Sent to Client #" + threads[i].clientNumber);
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-    public void sendAll(String command, String tabNum, String message){
-        try {
-            for (int i = 0; i < number_of_clients; i++) {
-                if (threads[i].isOpen) {
-                    threads[i].sendMessage(command);
-                    threads[i].sendMessage(tabNum);
                     threads[i].sendMessage(message);
                     System.out.println("Sent to Client #" + threads[i].clientNumber);
                 }

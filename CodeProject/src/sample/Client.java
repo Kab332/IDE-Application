@@ -1,8 +1,5 @@
 package sample;
 
-import javafx.scene.control.Tab;
-import jdk.nashorn.api.tree.ForInLoopTree;
-
 import java.io.*;
 import java.net.Socket;
 
@@ -11,8 +8,7 @@ public class Client extends Thread{
     DataOutputStream out;
     DataInputStream in;
 
-    boolean isOpen;
-
+    boolean isOpen = false;
 
     String currentMessage;
 
@@ -27,7 +23,9 @@ public class Client extends Thread{
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             isOpen = true;
-            System.out.println("Client is connected.");
+            if(isOpen) {
+                System.out.println("Client is connected.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,58 +36,40 @@ public class Client extends Thread{
         try {
 
             while (isOpen) {
-                command = readMessage();
-                processCommand(command);
+                System.out.println("Request Process Command: " + command + ".");
 
+                command = readMessage();
+
+
+                processCommand(command);
             }
 
             socket.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-//            System.out.println(e.getStackTrace());
+        } catch (Exception e) {}
 
-        }
-
-        System.out.println("CLOSING");
-//        System.exit(0);
-    }
-
-
-    public void serverBridge(String tabNum, String serialString){
-        System.out.println("Bridged");
-        getDoc(FileIOFunctions.tabs.getTabs().get(Integer.valueOf(tabNum))).change(serialString);
-    }
-
-    private Document getDoc(Tab tab){
-        for(Document i : FileIOFunctions.docList){
-            if(i.tab.equals(tab)){
-                return i;
-            }
-        }
-        return null;
+        //  System.exit(0);
     }
 
     public void processCommand(String command) throws Exception {
+        System.out.println("Processing " + command + ".");
         if (command.equals("CHANGE")) {
-            String tabNum = readMessage();
             currentMessage = readMessage();
-
-            System.out.println("TabNum: "+tabNum);
-            System.out.println("currentMessage: "+currentMessage);
-
-//            Main.controller.serverBridge(tabNum,currentMessage);
-
-            // Thomas code
-            serverBridge(tabNum,currentMessage);
-
         } else if (command.equals("CLOSE")) {
             closeClient();
         } else if (command.equals("TABS")) {
+            // Potential future code
+        } else if (command.equals("GET ALL TEXT")) {
+            String tabNames = readMessage();
+            String tabContents = readMessage();
 
-        } else {
+            System.out.println(tabNames);
+            System.out.println(tabContents);
+
+        }else if(command.equals(" ")){
+            System.out.println();
+        }else {
             currentMessage = readMessage();
-
         }
     }
 
