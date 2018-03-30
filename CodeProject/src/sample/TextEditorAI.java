@@ -13,14 +13,14 @@ import jdk.jfr.Name;
 
 import java.awt.*;
 
-public class TextEditorAI {
+public class TextEditorAI{
     private String indentation = "";
 
     private String _newValue;
     private String _change;
     private String[] brackets = {"()","{}","[]","<>","''","\"\""};
     //private String[] specialBrackets = {"()","{}","[]"};
-    private int caretPosition = 0;
+    public int caretPosition = 0;
     private boolean inBracket = false;
     private int closingBracketPosition = -1;
     private int openingBracketPosition = -1;
@@ -28,9 +28,16 @@ public class TextEditorAI {
     public boolean tab = false;
     public boolean breakloop = false;
 
+    private TextArea txt;
+
+    //private CarotPosition carotPos;
+
+
     //private final String newValue = null;
 
-    TextEditorAI(){}
+//    public TextEditorAI(){
+//        this.carotPos = new CarotPosition(txt);
+//    }
 
     //accesor methods
     public int getCaretPosition(TextArea text) {
@@ -54,6 +61,14 @@ public class TextEditorAI {
     }
 
     public void textAreaListener(TextArea text){
+        text.caretPositionProperty().addListener((observable, oldValue, newValue) -> {
+            //System.out.println("caretPos: "+newValue);
+            this.caretPosition = newValue.intValue();
+        });
+
+        //carotPosition.start();
+
+        this.txt = text;
         setCaretPosition(getCaretPosition(text));
         //System.out.println(caretPosition);
         set_change(text.getText(caretPosition, caretPosition+1));
@@ -62,7 +77,7 @@ public class TextEditorAI {
         System.out.println("new change: " +_change);
 
         System.out.println("tab " +tab);
-        //System.out.println("test: " + test);
+        System.out.println("test: " + test);
 
 
 
@@ -88,7 +103,10 @@ public class TextEditorAI {
                     if (_change.equals("\n")) {
                         if (i < 3){
                             if (get_change(getCaretPosition(text) - (1)).equals(brackets[i].substring(0, 1))) {
-                                indentation += "1";
+                                if(insideBracket()) {
+                                    System.out.println("Still inside brackets");
+                                    indentation += "1";
+                                }
                                 //indentation -= "\t";
                                 System.out.println("tab: " + tab);
                                 if (test) {
@@ -128,4 +146,13 @@ public class TextEditorAI {
 
 
     }
+
+    private boolean insideBracket() {
+        int pos = getCaretPosition(txt);
+        System.out.println(pos);
+        return true;
+    }
+
+
+
 }
