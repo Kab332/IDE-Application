@@ -14,7 +14,7 @@ public class Server extends Thread {
 
     public Server() {
         System.out.println("Please pass a port as an argument.");
-        System.exit(0);
+        //System.exit(0);
     }
 
     public Server(int port) {

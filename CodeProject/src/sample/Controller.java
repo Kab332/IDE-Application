@@ -34,6 +34,10 @@ public class Controller implements Initializable{
     @FXML MenuItem connectServerButton;
     @FXML MenuItem connectClientButton;
 
+    public Controller(){
+        System.out.println("Controller Constructor.");
+    }
+
     @FXML public void openNewTab(){
         addTab();
     }
@@ -104,6 +108,7 @@ public class Controller implements Initializable{
             }
         });
     }
+
 
     private String treeViewfileDirectoryPath;
     private File treeViewmainDirectory;
@@ -226,7 +231,10 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //adds the initial tab
+        System.out.println("Controller Initialized.");
         addTab();
+        FileIOFunctions.tabs = tabs;
+        FileIOFunctions.docList = docList;
     }
 
     private void addTab(){
@@ -309,7 +317,12 @@ public class Controller implements Initializable{
 
     private void timedSend(Tab tab, TextArea ta){
         System.out.println("Send to Users");
-        getDoc(tab).changed(ta.getText());
+        String serialized = getDoc(tab).changed(ta.getText());
+
+
+        //Main.TEACHER.sendAll("CHANGE",String.valueOf(docList.indexOf(getDoc(tab))),serialized);
+
+
         isPaused = False;
     }
 
@@ -350,27 +363,37 @@ public class Controller implements Initializable{
     }
 
 
-    public String getAllTexts(){
-        ObservableList<Tab> tabList = tabs.getTabs();
-        AnchorPane ap;
-        TextArea ta;
-
-        String tabInfo = "";
-
-        for (int i = 0; i < tabList.size(); i++) {
-            if (i > 0) {
-                tabInfo += "\n";
-            }
-
-            ap = (AnchorPane) tabList.get(i).getContent();
-            ta = (TextArea) ap.getChildren().get(0);
-
-            tabInfo += tabList.get(i).getText();
-            tabInfo += "\n" + ta.getText();
-        }
-
-        return tabInfo;
-    }
+//    public String [] getAllTexts(){
+//        ObservableList<Tab> tabList = tabs.getTabs();
+//        String [] array = new String[2];
+//
+//        AnchorPane ap;
+//        TextArea ta;
+//
+//        String names = "";
+//        String contents= "";
+//
+//        String text;
+//
+//        for (int i = 0; i < tabList.size(); i++) {
+//            ap = (AnchorPane) tabList.get(i).getContent();
+//            ta = (TextArea) ap.getChildren().get(0);
+//            text = ta.getText();
+//
+//            if (i > 0) {
+//                names += "@";
+//                contents += "---------------------123456---------------------";
+//            }
+//
+//            names += tabList.get(i).getText();
+//            contents += text;
+//        }
+//
+//        array[0] = names;
+//        array[1] = contents;
+//
+//        return array;
+//    }
 
 
 

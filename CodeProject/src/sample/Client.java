@@ -8,7 +8,7 @@ public class Client extends Thread{
     DataOutputStream out;
     DataInputStream in;
 
-    boolean isOpen;
+    boolean isOpen = false;
 
     String currentMessage;
 
@@ -23,7 +23,9 @@ public class Client extends Thread{
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             isOpen = true;
-            System.out.println("Client is connected.");
+            if(isOpen) {
+                System.out.println("Client is connected.");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,31 +36,34 @@ public class Client extends Thread{
         try {
 
             while (isOpen) {
+
                 command = readMessage();
-
                 processCommand(command);
-
-                System.out.println(command);
-                System.out.println("------------------");
-                System.out.println(currentMessage);
-                System.out.println("------------------");
             }
 
             socket.close();
 
         } catch (Exception e) {}
 
-        System.exit(0);
+        //  System.exit(0);
     }
 
     public void processCommand(String command) throws Exception {
+        System.out.println("Processing " + command + ".");
         if (command.equals("CHANGE")) {
             currentMessage = readMessage();
         } else if (command.equals("CLOSE")) {
             closeClient();
         } else if (command.equals("TABS")) {
             // Potential future code
-        } else {
+        } else if (command.equals("GET ALL TEXT")) {
+            String tabNames = readMessage();
+            String tabContents = readMessage();
+
+            System.out.println(tabNames);
+            System.out.println(tabContents);
+
+        }else {
             currentMessage = readMessage();
         }
     }
