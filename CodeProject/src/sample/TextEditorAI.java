@@ -14,15 +14,19 @@ import jdk.jfr.Name;
 import java.awt.*;
 
 public class TextEditorAI {
+    private String indentation = "";
+
     private String _newValue;
     private String _change;
-    private String[] brackets = {"()","{}","[]","<>","''"};
-    private String[] specialBrackets = {"()","{}","[]"};
+    private String[] brackets = {"()","{}","[]","<>","''","\"\""};
+    //private String[] specialBrackets = {"()","{}","[]"};
     private int caretPosition = 0;
     private boolean inBracket = false;
     private int closingBracketPosition = -1;
     private int openingBracketPosition = -1;
     public boolean test = true;
+    public boolean tab = false;
+    public boolean breakloop = false;
 
     //private final String newValue = null;
 
@@ -51,37 +55,77 @@ public class TextEditorAI {
 
     public void textAreaListener(TextArea text){
         setCaretPosition(getCaretPosition(text));
-        System.out.println(caretPosition);
+        //System.out.println(caretPosition);
         set_change(text.getText(caretPosition, caretPosition+1));
-        System.out.println(_change);
+        //System.out.println(_change);
         set_change(_newValue.substring(caretPosition,caretPosition+1));
         System.out.println("new change: " +_change);
 
-        if(test) {
-            if (_change.equals("{")) {
-                test = false;
-                System.out.println("this is a bracket");
-                //Inserts the close bracket after the open bracket
-                text.insertText(caretPosition+1, "}");
-                //set the cursor position to in between the brackets
-                Platform.runLater( new Runnable() {
-                    @Override
-                    public void run() {
-                        text.positionCaret(getCaretPosition(text)-1);
-                    }
-                });
-            }if(_change.equals("\n")){
-                if(get_change(getCaretPosition(text)-1).equals("{")){
-                    //tab the next line
-                    text.insertText(caretPosition+1, "\t");
+        System.out.println("tab " +tab);
+        //System.out.println("test: " + test);
 
-                    System.out.println("new line and tab");
+
+
+            //System.out.println("bracket test: " + brackets[i]);
+            if(test) {
+                System.out.println("entered test");
+                int i = 0;
+                while((i < brackets.length) && (!breakloop)) {
+                    if (_change.equals(brackets[i].substring(0, 1))) {
+                        System.out.println("IMPORTANT: " + brackets[i].substring(0, 1));
+                        test = false;
+                        System.out.println("this is a bracket");
+                        //Inserts the close bracket after the open bracket
+                        text.insertText(caretPosition + 1, brackets[i].substring(1, 2));
+                        //set the cursor position to in between the brackets
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                text.positionCaret(getCaretPosition(text) - 1);
+                            }
+                        });
+                    }
+                    if (_change.equals("\n")) {
+                        if (i < 3){
+                            if (get_change(getCaretPosition(text) - (1)).equals(brackets[i].substring(0, 1))) {
+                                indentation += "1";
+                                //indentation -= "\t";
+                                System.out.println("tab: " + tab);
+                                if (test) {
+                                    test = false;
+                                    //tab the next line
+                                    text.insertText(getCaretPosition(text), "\n" + indentation);
+                                    System.out.println("it tabed");
+//                                    if(indentation.endsWith("1")){
+//                                        System.out.println("DO YOU WORK?");
+//                                        indentation.substring(0,indentation.length()-1).replace("1","");
+//                                        System.out.println("does this work?");
+//                                        System.out.println("it indeted: " +indentation);
+//                                        text.insertText(getCaretPosition(text),indentation);
+//                                    }
+//                                    Platform.runLater(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            //
+//                                            text.positionCaret(getCaretPosition(text) - 1);
+//                                        }
+//                                    });
+
+                                    System.out.println("new line and tab");
+                                } else {
+                                    test = true;
+                                }
+                            }
+                        }
+                        System.out.println("new line");
+                    }
+                    i++;
                 }
-                System.out.println("new line");
+            } else {
+                test = true;
             }
-        } else {
-            test = true;
-        }
+
+
 
     }
 }

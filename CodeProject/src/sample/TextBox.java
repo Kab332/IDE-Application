@@ -24,20 +24,10 @@ public class TextBox implements Initializable{
         text.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                //TextEditor AI
-               //ai.arrowKeyListener(text);
-//                ai.set_oldValue(oldValue);
-//                ai.set_newValue(newValue);
+
                 System.out.println("change happened");
 
                 ai.set_newValue(newValue);
-//
-//                try{
-//                    //ai.arrowKeyListener(text);
-//                    ai.textAreaListener(text);
-//                } catch (Exception e){
-//
-//                }
 
 
                 ai.textAreaListener(text);
