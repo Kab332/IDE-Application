@@ -4,16 +4,18 @@ import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main extends Application{
 
     public static Stage primaryStage;
     public static double SceneWidth;
@@ -30,6 +32,12 @@ public class Main extends Application {
 
     public static TabPane teacherPane;
     public static TabPane studentPane;
+
+    ////////////////////////CON SOL SUTFF
+    public static TextArea consoleLines;
+    public static String compileCodeLocation;
+    public static Tab currentCompileTab;
+    //////////////////////////////////////////
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -133,5 +141,6 @@ public class Main extends Application {
 
 
     }
+
 
 }

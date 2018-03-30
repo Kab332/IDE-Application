@@ -19,15 +19,18 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
     @FXML Label bottomLabel;
     @FXML private TreeView<ProjectFile> projectTreeView;
     @FXML TabPane tabs;
     private SaveUIController saveUI = new SaveUIController();
+    private TextEditorAI ai = new TextEditorAI();
 
 //    Map<Tab, Document> tabDocMap = new TreeMap<>();
     List<Document> docList = new ArrayList<>();
@@ -67,6 +70,11 @@ public class Controller implements Initializable{
         String fileDirectoryPath = mainDirectory.getPath();
 
         treeViewfileDirectoryPath = fileDirectoryPath;
+
+        /////////compiler
+        Main.compileCodeLocation = fileDirectoryPath;
+        /////////compoiler
+
         treeViewmainDirectory = mainDirectory;
         updateTreeView();
 
@@ -221,8 +229,21 @@ public class Controller implements Initializable{
 
     }
 
-    @FXML public void formatCode(){
-        //this is where the text is formatted
+    @FXML public void compileCode(){
+        Stage compileConsoleStage = new Stage();
+        try {
+            Parent consoleLayout = FXMLLoader.load(getClass().getResource("ProgramConsole.fxml"));
+            compileConsoleStage.setTitle("Console");
+            compileConsoleStage.setScene(new Scene(consoleLayout));
+            compileConsoleStage.show();
+        } catch (IOException e) {
+            System.out.println("Couldn't open saveUI.fxml");
+            e.printStackTrace();
+        }
+
+        //TextArea Main.consoleLines;
+        //String Main.compileCodeLocation;
+        //Tab Main.currentCompileTab;
     }
 
     @FXML public void exit(){
@@ -331,18 +352,13 @@ public class Controller implements Initializable{
 
     private void textAreaAddListener(TextArea ta, Tab tab){
 
-
-
         ta.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 System.out.print("Changes in tab # <vs> index in doc list | [ "+tabs.getTabs().indexOf(tab)+" : "+docList.indexOf(getDoc(tab))+" ]\n" );
 
-
-                TextEditorAI ai = new TextEditorAI();
                 ai.set_newValue(newValue);
                 ai.textAreaListener(ta);
-
 
                 if( tabs.getTabs().indexOf(tab) != docList.indexOf(getDoc(tab))){
                     System.out.println("THE FUCKERY IS HIGH! I REPEAT! THE FUCKERY IS HIGH! ABORT MISSION");   //MEME
@@ -371,40 +387,5 @@ public class Controller implements Initializable{
 
 
     }
-
-
-//    public String [] getAllTexts(){
-//        ObservableList<Tab> tabList = tabs.getTabs();
-//        String [] array = new String[2];
-//
-//        AnchorPane ap;
-//        TextArea ta;
-//
-//        String names = "";
-//        String contents= "";
-//
-//        String text;
-//
-//        for (int i = 0; i < tabList.size(); i++) {
-//            ap = (AnchorPane) tabList.get(i).getContent();
-//            ta = (TextArea) ap.getChildren().get(0);
-//            text = ta.getText();
-//
-//            if (i > 0) {
-//                names += "@";
-//                contents += "---------------------123456---------------------";
-//            }
-//
-//            names += tabList.get(i).getText();
-//            contents += text;
-//        }
-//
-//        array[0] = names;
-//        array[1] = contents;
-//
-//        return array;
-//    }
-
-
 
 }

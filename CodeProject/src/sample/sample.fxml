@@ -56,11 +56,11 @@
                         <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="Run">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#formatCode" text="Format Text">
+                    <MenuItem mnemonicParsing="false" onAction="#compileCode" text="Compile">
                            <accelerator>
-                              <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
+                              <KeyCodeCombination alt="UP" code="F10" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator></MenuItem>
                   </items>
                 </Menu>

@@ -64,6 +64,7 @@ public class TextEditorAI{
         text.caretPositionProperty().addListener((observable, oldValue, newValue) -> {
             //System.out.println("caretPos: "+newValue);
             this.caretPosition = newValue.intValue();
+            //insideBracket();
         });
 
         //carotPosition.start();
@@ -74,22 +75,22 @@ public class TextEditorAI{
         set_change(text.getText(caretPosition, caretPosition+1));
         //System.out.println(_change);
         set_change(_newValue.substring(caretPosition,caretPosition+1));
-        System.out.println("new change: " +_change);
+        //System.out.println("new change: " +_change);
 
-        System.out.println("tab " +tab);
-        System.out.println("test: " + test);
+        //System.out.println("tab " +tab);
+        //System.out.println("test: " + test);
 
 
 
             //System.out.println("bracket test: " + brackets[i]);
             if(test) {
-                System.out.println("entered test");
+                //System.out.println("entered test");
                 int i = 0;
                 while((i < brackets.length) && (!breakloop)) {
                     if (_change.equals(brackets[i].substring(0, 1))) {
-                        System.out.println("IMPORTANT: " + brackets[i].substring(0, 1));
+                        //System.out.println("IMPORTANT: " + brackets[i].substring(0, 1));
                         test = false;
-                        System.out.println("this is a bracket");
+                        //System.out.println("this is a bracket");
                         //Inserts the close bracket after the open bracket
                         text.insertText(caretPosition + 1, brackets[i].substring(1, 2));
                         //set the cursor position to in between the brackets
@@ -101,19 +102,16 @@ public class TextEditorAI{
                         });
                     }
                     if (_change.equals("\n")) {
-                        if (i < 3){
+                        if (i == 2){
                             if (get_change(getCaretPosition(text) - (1)).equals(brackets[i].substring(0, 1))) {
-                                if(insideBracket()) {
-                                    System.out.println("Still inside brackets");
-                                    indentation += "1";
-                                }
+                                indentation += "1";
                                 //indentation -= "\t";
-                                System.out.println("tab: " + tab);
+                                //System.out.println("tab: " + tab);
                                 if (test) {
                                     test = false;
                                     //tab the next line
                                     text.insertText(getCaretPosition(text), "\n" + indentation);
-                                    System.out.println("it tabed");
+                                    //System.out.println("it tabed");
 //                                    if(indentation.endsWith("1")){
 //                                        System.out.println("DO YOU WORK?");
 //                                        indentation.substring(0,indentation.length()-1).replace("1","");
@@ -129,13 +127,13 @@ public class TextEditorAI{
 //                                        }
 //                                    });
 
-                                    System.out.println("new line and tab");
+                                    //System.out.println("new line and tab");
                                 } else {
                                     test = true;
                                 }
                             }
                         }
-                        System.out.println("new line");
+                        //System.out.println("new line");
                     }
                     i++;
                 }
@@ -147,11 +145,22 @@ public class TextEditorAI{
 
     }
 
-    private boolean insideBracket() {
-        int pos = getCaretPosition(txt);
-        System.out.println(pos);
-        return true;
-    }
+//    private boolean insideBracket() {
+//        boolean insideRight = false;
+//
+//        String text = txt.getText();
+//        int pos = this.caretPosition;
+//        String rightString = text.substring(pos);
+//        if(rightString.contains("{")) {
+//            rightString = rightString.substring(0, rightString.indexOf("{"));
+//        }
+//
+//        //judge rightstring, find f }
+//
+//        System.out.println(rightString);
+//
+//        return true;
+//    }
 
 
 
