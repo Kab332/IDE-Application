@@ -37,9 +37,9 @@ public class FileIOFunctions {
         fileOut.close();
     }
 
-    public static TextArea addTab(String tabName, TabPane tabs, boolean notEditable){
+    public static TextArea addTab(String tabName, TabPane tabs, boolean editable){
         //create new tab on menu button press of new tab or Ctrl+N
-        if(tabName.contains("Untitled") && !notEditable){
+        if(tabName.contains("Untitled") && editable){
             tabName += " " + tabName + "Tab " + (tabs.getTabs().size() + 1);
         }
         Tab tab = new Tab(tabName);
@@ -49,7 +49,7 @@ public class FileIOFunctions {
         //Instantiate New Text area
         TextArea textArea = new TextArea();
         textArea.getStyleClass().add("code");
-        textArea.setDisable(notEditable);
+        textArea.setEditable(editable);
 
         //Intantiate anchor
         AnchorPane textAreaAnchor = new AnchorPane(textArea);
@@ -103,7 +103,7 @@ public class FileIOFunctions {
             System.out.println(tabContents[i]);
 
 
-            TextArea ta = FileIOFunctions.addTab(tabNames[i], FileIOFunctions.teacherPane, true);
+            TextArea ta = FileIOFunctions.addTab(tabNames[i], FileIOFunctions.teacherPane, false);
             ta.setText(tabContents[i]);
         }
     }
