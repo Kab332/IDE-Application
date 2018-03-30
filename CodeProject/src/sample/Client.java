@@ -1,5 +1,8 @@
 package sample;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -32,6 +35,7 @@ public class Client extends Thread{
     }
 
     public void run() {
+        System.out.println("Client Run Thread Number: "+Thread.currentThread().getId());
         String command = "";
         try {
 
@@ -48,6 +52,10 @@ public class Client extends Thread{
         //  System.exit(0);
     }
 
+//    public static void main (String [] args) {
+//        (new Thread(new Client())).start();
+//    }
+
     public void processCommand(String command) throws Exception {
         System.out.println("Processing " + command + ".");
         if (command.equals("CHANGE")) {
@@ -60,12 +68,22 @@ public class Client extends Thread{
             String tabNames = readMessage();
             String tabContents = readMessage();
 
-            System.out.println(tabNames);
-            System.out.println(tabContents);
+            FileIOFunctions.tabNames = tabNames;
+            FileIOFunctions.tabContents = tabContents;
+
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    //runs in main thread
+                    FileIOFunctions.addTabsToTeacherPane();
+                }
+            });
 
         }else {
             currentMessage = readMessage();
         }
+
+
     }
 
     public void closeClient() throws IOException {

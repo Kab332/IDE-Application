@@ -52,11 +52,11 @@ public class ClientConnectionHandler extends Thread {
 
             String [] array = FileIOFunctions.getAllTexts();
 
-            System.out.print("getAllTexts(): ");
-            System.out.println(array == null);
-
-            System.out.println(array[0]);
-            System.out.println(array[1]);
+//            System.out.print("getAllTexts(): ");
+//            System.out.println(array == null);
+//
+//            System.out.println(array[0]);
+//            System.out.println(array[1]);
 
             sendMessage("GET ALL TEXT");
             sendMessage(array[0]);

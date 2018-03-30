@@ -2,7 +2,7 @@ package sample;
 
 import java.net.ServerSocket;
 
-public class Server extends Thread {
+public class Server extends Thread{
     ServerSocket serverSocket;
     ClientConnectionHandler [] threads;
 
@@ -40,6 +40,10 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
+
+//    public static void main (String [] args) {
+//        (new Thread(new Server())).start();
+//    }
 
     public void sendAll(String command, String message){
         try {
