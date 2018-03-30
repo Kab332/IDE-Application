@@ -40,7 +40,6 @@ public class Client extends Thread{
         try {
 
             while (isOpen) {
-
                 command = readMessage();
                 processCommand(command);
             }
