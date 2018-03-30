@@ -337,6 +337,13 @@ public class Controller implements Initializable{
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 System.out.print("Changes in tab # <vs> index in doc list | [ "+tabs.getTabs().indexOf(tab)+" : "+docList.indexOf(getDoc(tab))+" ]\n" );
+
+
+                TextEditorAI ai = new TextEditorAI();
+                ai.set_newValue(newValue);
+                ai.textAreaListener(ta);
+
+
                 if( tabs.getTabs().indexOf(tab) != docList.indexOf(getDoc(tab))){
                     System.out.println("THE FUCKERY IS HIGH! I REPEAT! THE FUCKERY IS HIGH! ABORT MISSION");   //MEME
                 }
