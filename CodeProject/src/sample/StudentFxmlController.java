@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +22,7 @@ public class StudentFxmlController implements Initializable{
 
     @FXML TabPane teacherTabPane;
     @FXML TabPane studentTabPane;
+    @FXML Label bottomLabel;
 
     private SaveUIController saveUI = new SaveUIController();
 
@@ -41,6 +43,23 @@ public class StudentFxmlController implements Initializable{
 
     @FXML public void copyTeacherCodeToUser(){
         //Copy text from teacher code to user text area;
+        ObservableList<Tab> tabList = teacherTabPane.getTabs();
+
+        AnchorPane ap;
+        TextArea ta;
+
+        for (int i = 0; i < tabList.size(); i++) {
+            ap = (AnchorPane) tabList.get(i).getContent();
+            ta = (TextArea) ap.getChildren().get(0);
+
+            String tabName = tabList.get(i).getText();
+            String tabContent = ta.getText();
+
+            TextArea textArea = FileIOFunctions.addTab(tabName, studentTabPane, true);
+            textArea.setText(tabContent);
+
+        }
+
     }
 
     @FXML public void chooseSaveLocation(){
@@ -55,6 +74,7 @@ public class StudentFxmlController implements Initializable{
 
         currentFilePath = fileDirectoryPath;
         //currentFilePath = mainDirectory;
+        bottomLabel.setText("Workspace Path: " + currentFilePath);
     }
 
     private String currentFilePath = "";
@@ -139,5 +159,6 @@ public class StudentFxmlController implements Initializable{
 //        System.out.println(teacherTabPane == null);
         FileIOFunctions.studentPane = studentTabPane;
         FileIOFunctions.teacherPane = teacherTabPane;
+        bottomLabel.setText("Workspace Path: " + currentFilePath);
     }
 }

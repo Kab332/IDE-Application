@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.*;
 
 public class Controller implements Initializable{
+    @FXML Label bottomLabel;
     @FXML private TreeView<ProjectFile> projectTreeView;
     @FXML TabPane tabs;
     private SaveUIController saveUI = new SaveUIController();
@@ -47,6 +48,7 @@ public class Controller implements Initializable{
         Main.TEACHER.start();
         connectClientButton.setDisable(true);
         connectServerButton.setDisable(true);
+        bottomLabel.setText("Server Started with PORT:" + Main.PORT);
     }
 
     @FXML public void startAsStudent(){
@@ -231,6 +233,7 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //adds the initial tab
+        bottomLabel.setText("Server Not Yet Started.");
         System.out.println("Controller Initialized.");
         addTab();
         FileIOFunctions.tabs = tabs;

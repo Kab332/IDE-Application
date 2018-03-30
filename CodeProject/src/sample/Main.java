@@ -1,12 +1,16 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -29,7 +33,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = (Parent) loader.load();
@@ -57,18 +60,13 @@ public class Main extends Application {
         Main.studentUIScene = studentUIScene;
 
         primaryStage.show();
+        System.out.println("Main Thread Number: "+Thread.currentThread().getId());
 
         ////testing
         //add tabs to teacherPane
         studentPane = FileIOFunctions.studentPane;
         teacherPane = FileIOFunctions.teacherPane;
-
-//        System.out.println(FileIOFunctions.teacherPane == null);
-//        System.out.println(FileIOFunctions.studentPane == null);
-        TextArea ta = FileIOFunctions.addTab("Something", FileIOFunctions.teacherPane, false);
-        ta.setText("HELLO");
     }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -79,13 +77,13 @@ public class Main extends Application {
     }
 
     public static void connectThisClient(){
+
         //Connect code client here
         STUDENT = new Client(IP, PORT);
         STUDENT.start();
-
         STUDENT.sendMessage("GET ALL TEXT");
-        System.out.println("Client Created in Main.");
     }
+
 
     private void ThomasMain() {
 

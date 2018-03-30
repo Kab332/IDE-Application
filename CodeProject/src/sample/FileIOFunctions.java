@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
@@ -23,6 +24,9 @@ public class FileIOFunctions {
     public static TabPane teacherPane;
     public static TabPane studentPane;
 
+    public static String tabNames;
+    public static String tabContents;
+
     public static List<Document> docList;
     public static TabPane tabs;
 
@@ -35,7 +39,7 @@ public class FileIOFunctions {
 
     public static TextArea addTab(String tabName, TabPane tabs, boolean editable){
         //create new tab on menu button press of new tab or Ctrl+N
-        if(tabName.contains("Untitled")){
+        if(tabName.contains("Untitled") && editable){
             tabName += " " + tabName + "Tab " + (tabs.getTabs().size() + 1);
         }
         Tab tab = new Tab(tabName);
@@ -45,7 +49,7 @@ public class FileIOFunctions {
         //Instantiate New Text area
         TextArea textArea = new TextArea();
         textArea.getStyleClass().add("code");
-        textArea.setDisable(editable);
+        textArea.setEditable(editable);
 
         //Intantiate anchor
         AnchorPane textAreaAnchor = new AnchorPane(textArea);
@@ -88,6 +92,20 @@ public class FileIOFunctions {
         array[1] = contents;
 
         return array;
+    }
+
+    public static void addTabsToTeacherPane(){
+        String [] tabNames = FileIOFunctions.tabNames.split("@");
+        String [] tabContents = FileIOFunctions.tabContents.split("---------------------123456---------------------");
+
+        for(int i = 0; i < tabNames.length; i++){
+            System.out.println(tabNames[i]);
+            System.out.println(tabContents[i]);
+
+
+            TextArea ta = FileIOFunctions.addTab(tabNames[i], FileIOFunctions.teacherPane, false);
+            ta.setText(tabContents[i]);
+        }
     }
 
 
