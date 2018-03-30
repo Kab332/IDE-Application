@@ -16,6 +16,7 @@ public class RunProgram implements Runnable {
     }
 
     public void run() {
+        String divider = "";
         try {
             String [] splitLine = fileName.split("\\.");
             String name = "";
@@ -29,7 +30,13 @@ public class RunProgram implements Runnable {
                 name += splitLine[i];
             }
 
-            runProcess("javac " + filePath + "\\" + fileName);
+            if (filePath.contains("\\")) {
+                divider = "\\";
+            } else if (filePath.contains("/")) {
+                divider = "/";
+            }
+
+            runProcess("javac " + filePath + divider + fileName);
             runProcess("java -cp " + filePath + " " + name);
 
         } catch (Exception e) {

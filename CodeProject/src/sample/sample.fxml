@@ -60,7 +60,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#compileCode" text="Compile">
                            <accelerator>
-                              <KeyCodeCombination alt="UP" code="F10" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                              <KeyCodeCombination alt="UP" code="P" control="DOWN" meta="UP" shift="DOWN" shortcut="UP" />
                            </accelerator></MenuItem>
                   </items>
                 </Menu>
