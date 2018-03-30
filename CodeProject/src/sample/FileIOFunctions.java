@@ -38,10 +38,6 @@ public class FileIOFunctions {
     }
 
     public static TextArea addTab(String tabName, TabPane tabs, boolean editable){
-        //create new tab on menu button press of new tab or Ctrl+N
-        if(tabName.contains("Untitled") && editable){
-            tabName += " " + tabName + "Tab " + (tabs.getTabs().size() + 1);
-        }
         Tab tab = new Tab(tabName);
         tabs.getTabs().add(tab);
         tabs.getSelectionModel().select(tab);
@@ -102,12 +98,31 @@ public class FileIOFunctions {
             System.out.println(tabNames[i]);
             System.out.println(tabContents[i]);
 
-
             TextArea ta = FileIOFunctions.addTab(tabNames[i], FileIOFunctions.teacherPane, false);
             ta.setText(tabContents[i]);
         }
     }
 
+    // Setting IDE tabs to the studentPane's tabs
+    public static void setTabs() {
+        // If you want to remove the tabs currently on the IDE
+        tabs.getTabs().clear();
+
+        // If the studentPane tabs do not have the same style, we set the TextArea's text manually
+        AnchorPane spAp;
+        TextArea spTa;
+
+        for (int i = 0; i < studentPane.getTabs().size(); i++) {
+            spAp = (AnchorPane) studentPane.getTabs().get(i).getContent();
+            spTa = (TextArea) spAp.getChildren().get(0);
+
+            TextArea ta = FileIOFunctions.addTab(studentPane.getTabs().get(i).getText(), tabs, true);
+            ta.setText(spTa.getText());
+        }
+
+//        // if the studentPane tabs have the same style then we can use this
+//        tabs.getTabs().addAll(studentPane.getTabs());
+    }
 
     //This method reads a file using path name and delimitor
     public static String getData(String path, String delimiter) {

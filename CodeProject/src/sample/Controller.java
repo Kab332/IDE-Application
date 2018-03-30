@@ -249,9 +249,22 @@ public class Controller implements Initializable {
     }
 
     @FXML public void exit(){
+        if (Main.TEACHER != null) {
+            Main.TEACHER.closeServer();
+        }
+
+        if (Main.STUDENT != null) {
+            try {
+                Main.STUDENT.closeClient();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         System.exit(0);
     }
-    
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //adds the initial tab

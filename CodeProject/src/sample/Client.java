@@ -35,34 +35,27 @@ public class Client extends Thread{
     }
 
     public void run() {
-        System.out.println("Client Run Thread Number: "+Thread.currentThread().getId());
         String command = "";
         try {
-
             while (isOpen) {
                 command = readMessage();
                 processCommand(command);
             }
-
             socket.close();
-
         } catch (Exception e) {}
-
-        //  System.exit(0);
     }
 
-//    public static void main (String [] args) {
-//        (new Thread(new Client())).start();
-//    }
-
     public void processCommand(String command) throws Exception {
-        System.out.println("Processing " + command + ".");
         if (command.equals("CHANGE")) {
+            String tabNumber = readMessage();
             currentMessage = readMessage();
+
+            System.out.println(tabNumber);
+            System.out.println(currentMessage);
+
         } else if (command.equals("CLOSE")) {
             closeClient();
-        } else if (command.equals("TABS")) {
-            // Potential future code
+
         } else if (command.equals("GET ALL TEXT")) {
             String tabNames = readMessage();
             String tabContents = readMessage();
@@ -77,17 +70,15 @@ public class Client extends Thread{
                     FileIOFunctions.addTabsToTeacherPane();
                 }
             });
-
         }else {
             currentMessage = readMessage();
         }
-
-
     }
 
     public void closeClient() throws IOException {
-        isOpen = false;
         sendMessage("CLOSE");
+        System.out.println("Client is closed.");
+        isOpen = false;
     }
 
     public void sendMessage(String message) {

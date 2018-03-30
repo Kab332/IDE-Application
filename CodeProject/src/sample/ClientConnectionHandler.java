@@ -36,7 +36,6 @@ public class ClientConnectionHandler extends Thread {
             }
 
             clientSocket.close();
-
         } catch (Exception e) {}
     }
 
@@ -47,24 +46,13 @@ public class ClientConnectionHandler extends Thread {
             System.out.println("Client #" + clientNumber + " has closed");
             isOpen = false;
         } else if (request.equals("GET ALL TEXT")) {
-
-            System.out.println("Processing :" + request);
-
             String [] array = FileIOFunctions.getAllTexts();
-
-//            System.out.print("getAllTexts(): ");
-//            System.out.println(array == null);
-//
-//            System.out.println(array[0]);
-//            System.out.println(array[1]);
 
             sendMessage("GET ALL TEXT");
             sendMessage(array[0]);
             sendMessage(array[1]);
-
         } else {}
     }
-
 
     public void sendMessage(String message) {
         sendMessageAsByte(message.getBytes());

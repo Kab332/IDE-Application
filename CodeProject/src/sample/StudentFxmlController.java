@@ -32,8 +32,18 @@ public class StudentFxmlController implements Initializable{
 
     @FXML public void backToTeacherScene(){
         Main.primaryStage.close();
+        FileIOFunctions.setTabs();
         Main.primaryStage.setScene(Main.teacherScene);
         Main.primaryStage.show();
+
+        if (Main.STUDENT != null) {
+            try {
+                Main.STUDENT.closeClient();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 
@@ -125,14 +135,18 @@ public class StudentFxmlController implements Initializable{
     }
 
     @FXML public void exit(){
+        if (Main.STUDENT != null) {
+            try {
+                Main.STUDENT.closeClient();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         System.exit(0);
     }
 
     private TextArea addTab(String tabName, TabPane tabs){
-        //create new tab on menu button press of new tab or Ctrl+N
-        if(tabName.contains("Untitled")){
-            tabName += " " + tabName + "Tab " + (tabs.getTabs().size() + 1);
-        }
         Tab tab = new Tab(tabName);
         tabs.getTabs().add(tab);
         tabs.getSelectionModel().select(tab);
