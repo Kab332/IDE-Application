@@ -244,13 +244,14 @@ public class Controller implements Initializable {
         //TextArea Main.consoleLines;
         //String Main.compileCodeLocation;
         //Tab Main.currentCompileTab;
+        RunProgram runCode = new RunProgram(Main.currentCompileTab.getText(), Main.compileCodeLocation);
+        runCode.run();
     }
 
     @FXML public void exit(){
         System.exit(0);
     }
-
-
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //adds the initial tab

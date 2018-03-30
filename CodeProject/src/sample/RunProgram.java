@@ -36,6 +36,7 @@ public class RunProgram implements Runnable {
             e.printStackTrace();
         }
         System.out.println(content);
+        Main.consoleLines.setText(content);
     }
 
     public void runProcess (String command) throws Exception {
