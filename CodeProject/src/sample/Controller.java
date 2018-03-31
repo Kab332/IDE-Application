@@ -360,8 +360,10 @@ public class Controller implements Initializable {
 
         //Main.TEACHER.sendAll("CHANGE",String.valueOf(docList.indexOf(getDoc(tab))),serialized);
         String [] array = FileIOFunctions.getAllTexts();
-        Main.TEACHER.sendAll("GET ALL TEXT", array[0], array[1]);
 
+        if (Main.TEACHER != null && Main.TEACHER.isOpen) {
+            Main.TEACHER.sendAll("GET ALL TEXT", array[0], array[1]);
+        }
 
         isPaused = False;
     }
