@@ -36,7 +36,7 @@ public class StudentFxmlController implements Initializable{
         Main.primaryStage.setScene(Main.teacherScene);
         Main.primaryStage.show();
 
-        if (Main.STUDENT != null) {
+        if (Main.STUDENT != null && Main.STUDENT.isOpen) {
             try {
                 Main.STUDENT.closeClient();
             } catch (Exception e) {
@@ -135,7 +135,7 @@ public class StudentFxmlController implements Initializable{
     }
 
     @FXML public void exit(){
-        if (Main.STUDENT != null) {
+        if (Main.STUDENT != null && Main.STUDENT.isOpen) {
             try {
                 Main.STUDENT.closeClient();
             } catch (Exception e) {

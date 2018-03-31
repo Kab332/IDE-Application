@@ -87,7 +87,6 @@ public class Server extends Thread{
 
     public void closeServer() {
         sendAll("CLOSE");
-        System.out.println("Server is closed.");
         isOpen = false;
     }
 }

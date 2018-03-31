@@ -77,7 +77,6 @@ public class Client extends Thread{
 
     public void closeClient() throws IOException {
         sendMessage("CLOSE");
-        System.out.println("Client is closed.");
         isOpen = false;
     }
 

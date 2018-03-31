@@ -94,12 +94,18 @@ public class FileIOFunctions {
         String [] tabNames = FileIOFunctions.tabNames.split("@");
         String [] tabContents = FileIOFunctions.tabContents.split("---------------------123456---------------------");
 
+        FileIOFunctions.teacherPane.getTabs().clear();
+
         for(int i = 0; i < tabNames.length; i++){
-            System.out.println(tabNames[i]);
-            System.out.println(tabContents[i]);
+            //System.out.println(tabNames[i]);
+            //System.out.println(tabContents[i]);
 
             TextArea ta = FileIOFunctions.addTab(tabNames[i], FileIOFunctions.teacherPane, false);
-            ta.setText(tabContents[i]);
+            try {
+                ta.setText(tabContents[i]);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                ta.setText("");
+            }
         }
     }
 

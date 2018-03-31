@@ -249,11 +249,11 @@ public class Controller implements Initializable {
     }
 
     @FXML public void exit(){
-        if (Main.TEACHER != null) {
+        if (Main.TEACHER != null && Main.TEACHER.isOpen) {
             Main.TEACHER.closeServer();
         }
 
-        if (Main.STUDENT != null) {
+        if (Main.STUDENT != null && Main.STUDENT.isOpen) {
             try {
                 Main.STUDENT.closeClient();
             } catch (Exception e) {
@@ -359,6 +359,8 @@ public class Controller implements Initializable {
 
 
         //Main.TEACHER.sendAll("CHANGE",String.valueOf(docList.indexOf(getDoc(tab))),serialized);
+        String [] array = FileIOFunctions.getAllTexts();
+        Main.TEACHER.sendAll("GET ALL TEXT", array[0], array[1]);
 
 
         isPaused = False;
