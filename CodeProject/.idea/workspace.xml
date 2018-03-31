@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="Added Compiler Console UI.">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Client.java" afterPath="$PROJECT_DIR$/src/sample/Client.java" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" afterPath="$PROJECT_DIR$/src/sample/Controller.java" />
-      <change beforePath="$PROJECT_DIR$/src/sample/FileIOFunctions.java" afterPath="$PROJECT_DIR$/src/sample/FileIOFunctions.java" />
-      <change beforePath="$PROJECT_DIR$/src/sample/Server.java" afterPath="$PROJECT_DIR$/src/sample/Server.java" />
-      <change beforePath="$PROJECT_DIR$/src/sample/StudentFxmlController.java" afterPath="$PROJECT_DIR$/src/sample/StudentFxmlController.java" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -603,7 +598,7 @@
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1522254551611" duration="708000" />
       <workItem from="1522274820351" duration="22902000" />
-      <workItem from="1522348237501" duration="41507000" />
+      <workItem from="1522348237501" duration="41599000" />
     </task>
     <task id="LOCAL-00001" summary="Updated UI, Added Bunch of functionalities">
       <created>1522274396455</created>
@@ -787,11 +782,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522452337318</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Shippable product, no thanks to Kabilan.">
+      <created>1522454709734</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1522454709734</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66566000" />
+    <option name="totallyTimeSpent" value="66658000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="697" extended-state="0" />
@@ -896,7 +898,8 @@
     <MESSAGE value="Added useful information to the bottom label" />
     <MESSAGE value="Added TextArea AI to project" />
     <MESSAGE value="Added Compiler Console UI." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Compiler Console UI." />
+    <MESSAGE value="Shippable product, no thanks to Kabilan." />
+    <option name="LAST_COMMIT_MESSAGE" value="Shippable product, no thanks to Kabilan." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
