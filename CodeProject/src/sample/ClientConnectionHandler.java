@@ -34,16 +34,13 @@ public class ClientConnectionHandler extends Thread {
                 request = readMessage();
                 processRequest(request);
             }
-
             clientSocket.close();
+            System.out.println("Client #" + clientNumber + " has closed");
         } catch (Exception e) {}
     }
 
-    public void processRequest(String request) throws Exception {
-        System.out.println("Received a request: " + request);
-
+    public void processRequest(String request) {
         if (request.equals("CLOSE")) {
-            System.out.println("Client #" + clientNumber + " has closed");
             isOpen = false;
         } else if (request.equals("GET ALL TEXT")) {
             String [] array = FileIOFunctions.getAllTexts();

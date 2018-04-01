@@ -26,9 +26,7 @@ public class Client extends Thread{
             out = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             isOpen = true;
-            if(isOpen) {
-                System.out.println("Client is connected.");
-            }
+            System.out.println("Client is connected.");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -42,10 +40,11 @@ public class Client extends Thread{
                 processCommand(command);
             }
             socket.close();
+            System.out.println("Client has disconnected.");
         } catch (Exception e) {}
     }
 
-    public void processCommand(String command) throws Exception {
+    public void processCommand(String command) {
         if (command.equals("CHANGE")) {
             String tabNumber = readMessage();
             currentMessage = readMessage();
@@ -75,7 +74,7 @@ public class Client extends Thread{
         }
     }
 
-    public void closeClient() throws IOException {
+    public void closeClient() {
         sendMessage("CLOSE");
         isOpen = false;
     }
