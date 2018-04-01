@@ -1,0 +1,37 @@
+.code{
+    -fx-font-family: monospace;
+    -fx-background-color: #2E2E2E;
+    -fx-control-inner-background: #404040;
+    -fx-text-fill: whitesmoke;
+    -fx-font-size: 12pt;
+}
+
+#projectTreeView{
+    -fx-font-family: monospace;
+    -fx-background-color: #2E2E2E;
+    -fx-control-inner-background: #7D7D7D;
+    -fx-text-fill: #202020;
+    -fx-font-size: 12pt;
+}
+
+.split-pane-divider {
+    -fx-padding: 1 ;
+}
+
+/*
+    The tab bar
+*/
+
+.jfx-tab-pane .headers-region {
+    -fx-background-color: red;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: red;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: red;
+    -fx-stroke-width: 3pt;
+}
+.root{
+    /*-fx-background-color: #7D7D7D;*/
+}

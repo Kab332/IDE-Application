@@ -47,6 +47,7 @@ public class Main extends Application{
         Controller controller = (Controller) loader.getController();
         controller = (Controller) loader.getController();
         Scene scene = new Scene(root, 759, 600);
+        primaryStage.setTitle("Java'ing With Friends");
         teacherScene = scene;
 
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
