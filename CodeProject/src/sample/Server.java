@@ -27,6 +27,7 @@ public class Server extends Thread{
         this.server_port = port;
     }
 
+    // When the Server is started...
     public void run() {
         try {
             serverSocket = new ServerSocket(server_port);
@@ -44,6 +45,7 @@ public class Server extends Thread{
         } catch (Exception e) {}
     }
 
+    // Sending a single command to all connected clients
     public void sendAll(String command){
         try {
             for (int i = 0; i < number_of_clients; i++) {
@@ -56,6 +58,7 @@ public class Server extends Thread{
         }
     }
 
+    // Sending a command and a message to all connected clients
     public void sendAll(String command, String message){
         try {
             for (int i = 0; i < number_of_clients; i++) {
@@ -70,13 +73,14 @@ public class Server extends Thread{
         }
     }
 
-    public void sendAll(String command, String tabNumber, String message) {
+    // Sending a command, and two messages to all connected clients
+    public void sendAll(String command, String message1, String message2) {
         try {
             for (int i = 0; i < number_of_clients; i++) {
                 if (threads[i].isOpen) {
                     threads[i].sendMessage(command);
-                    threads[i].sendMessage(tabNumber);
-                    threads[i].sendMessage(message);
+                    threads[i].sendMessage(message1);
+                    threads[i].sendMessage(message2);
                     System.out.println("Sent to Client #" + threads[i].clientNumber);
                 }
             }
@@ -85,6 +89,7 @@ public class Server extends Thread{
         }
     }
 
+    // Closing the server, sending a CLOSE command to all clients to deal with connections and then stopping the while loop
     public void closeServer() {
         System.out.println("Server has closed, disconnecting all clients.");
         sendAll("CLOSE");
