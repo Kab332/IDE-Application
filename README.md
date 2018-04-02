@@ -43,7 +43,8 @@ Instructions:
     
     4.d) To Save Files
       4.d.1)Click File then Save or alternatively press Ctrl-S on keyboard.
-	  4.e)To Run  and Compile
+      
+    4.e)To Run  and Compile
       4.e.1) Select the tab with the main method, Click Run then click Compile Program.
     Note: This IDE only compiles java programs.
     
