@@ -1,0 +1,32 @@
+apply plugin: "java"
+
+sourceSets{
+    main.java.srcDir "src/sample"
+}
+
+jar{
+    manifest.attributes "Main-Class": "sample.Main"
+}
+
+task copyTask(type: Copy) {
+    from 'src/sample/LoginUI.fxml'
+    into 'build/classes/java/main/sample'
+
+    from 'src/sample/ProgramConsole.fxml'
+    into 'build/classes/java/main/sample'
+
+    from 'src/sample/sample.fxml'
+    into 'build/classes/java/main/sample'
+
+    from 'src/sample/saveUI.fxml'
+    into 'build/classes/java/main/sample'
+
+    from 'src/sample/student.fxml'
+    into 'build/classes/java/main/sample'
+
+    from 'src/sample/textArea.fxml'
+    into 'build/classes/java/main/sample'
+
+    from 'src/sample/style.css'
+    into 'build/classes/java/main/sample'
+}

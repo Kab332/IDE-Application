@@ -13,6 +13,13 @@ Group Members:	Kabilan Manogaran
 		Thomas Chapman
 		Musabbir Ahmed Baki
 		Yash Pandya
+
+--------------------Gradle Setup Commands---------------------------------
+git clone https://github.com/yash1094/Final-Project
+cd Final-Project/CodeProject/
+gradle copyTask build
+java -jar build/libs/CodeProject.jar
+--------------------------------------------------------------------------
 				
 GitHub Repository: https://github.com/yash1094/Final-Project
 
