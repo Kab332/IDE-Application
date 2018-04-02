@@ -18,7 +18,7 @@ Thomas "Cool Guy ⌐□-□ " Chapman
 
 
 User guide:
-Please download the user manual Called UserManual.dox
+Please download the user manual Called User_Manual.dox
 
 
 
