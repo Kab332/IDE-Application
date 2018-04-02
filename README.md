@@ -10,8 +10,17 @@ Lucid Cart Link:
 https://www.lucidchart.com/documents/edit/9422030a-6e01-4269-8a26-2f84271c2111/0?shared=true&
 
 Authors:
-
 Musabbir Ahmed Baki
 Yash Pandya
 Thomas "Cool Guy ⌐□-□ " Chapman
+Kabilan Manogaran
+
+
+
+User guide:
+Please download the user manual Called User_Manual.dox
+
+
+
+
 
