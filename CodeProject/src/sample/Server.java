@@ -34,6 +34,11 @@ public class Server extends Thread{
             threads = new ClientConnectionHandler[max_clients];
 
             System.out.println("Server has started.");
+
+            /**
+             *  The Server constantly waits for Client connections and creates a ClientConnectionHandler instance for  each
+             *  one. It only stops when the server is closed or when the number of Clients exceed the maximum clients possible.
+             */
             while (isOpen && (number_of_clients < max_clients)) {
                 threads[number_of_clients] = new ClientConnectionHandler(serverSocket.accept(), number_of_clients+1);
                 threads[number_of_clients].start();

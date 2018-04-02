@@ -4,8 +4,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
+/**
+ * This class' purpose is to handle each Server to Client connection. This is the class that sends and receives messages
+ * to the client.
+ */
 public class ClientConnectionHandler extends Thread {
     Socket clientSocket;
+
+    // Using Data Input/Output Stream to send and receive messages
     DataInputStream in;
     DataOutputStream out;
 
@@ -13,6 +19,7 @@ public class ClientConnectionHandler extends Thread {
 
     boolean isOpen;
 
+    // The constructor, initializing variables
     public ClientConnectionHandler(Socket socket, int number) {
         clientSocket = socket;
         clientNumber = number;
@@ -26,10 +33,16 @@ public class ClientConnectionHandler extends Thread {
         }
     }
 
+    // When ClientConnectionHandler is started...
     public void run() {
         String request = "";
 
         try {
+            /**
+             * The ClientConnectionHandler constantly waits for requests from the client. Requests are the initial message
+             * that the client sends. This initial message determines how the server receives the messages that come after
+             * it (if there are any).
+             */
             while (isOpen) {
                 request = readMessage();
                 processRequest(request);
@@ -39,9 +52,13 @@ public class ClientConnectionHandler extends Thread {
         } catch (Exception e) {}
     }
 
+    // These are the different actions that the ClientConnectionHandler can take based on the request message from the Client
     public void processRequest(String request) {
+        // Request for closing connection
         if (request.equals("CLOSE")) {
             isOpen = false;
+
+        // Request for getting all of the text on the Server's text areas
         } else if (request.equals("GET ALL TEXT")) {
             String [] array = FileIOFunctions.getAllTexts();
 
@@ -51,10 +68,12 @@ public class ClientConnectionHandler extends Thread {
         } else {}
     }
 
+    // Sending a message to the Client, takes a string and sends it as a byte
     public void sendMessage(String message) {
         sendMessageAsByte(message.getBytes());
     }
 
+    // Sends a byte message to the Client
     public void sendMessageAsByte(byte [] message) {
         try {
             out.writeInt(message.length);
@@ -65,10 +84,12 @@ public class ClientConnectionHandler extends Thread {
         }
     }
 
+    // Converts the message read as bytes to String
     public String readMessage() {
         return new String(readMessageAsByte());
     }
 
+    // Reads an incoming message as bytes
     public byte [] readMessageAsByte() {
         byte [] data = new byte[256];
         int length;
